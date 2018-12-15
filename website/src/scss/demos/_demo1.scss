@@ -1,3 +1,7 @@
+.content--demo1 {
+  // display: none;
+}
+
 .grid {
   position: absolute;
   padding: calc(1.5em + 42px + 1.5em) 1.5em;
@@ -33,6 +37,10 @@
   a {
     cursor: none;
   }
+  &:nth-child(3),
+  &:nth-child(4) {
+    margin-bottom: 0;
+  }
 }
 
 .grid__item--wide {
@@ -55,11 +63,8 @@
     opacity: 1;
   }
   &.is-closing {
-    &:before {
-      transform: translateX(-50%) rotate(-135deg);
-    }
     &:after {
-      transform: translateX(-50%) rotate(-225deg);
+      transform: translateX(-50%) rotate(0deg);
     }
   }
 }
@@ -85,3 +90,11 @@
   top: 50%;
   transform: translateX(-50%) rotate(-90deg);
 }
+
+// .example {
+//   grid-area: example;
+//   background: red;
+//   grid-column: span 2;
+//   display: flex;
+//   align-items: center;
+// }

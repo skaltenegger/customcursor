@@ -42,19 +42,11 @@ class Primary {
       availableWidth / innerGridBox.width,
       availableHeight / innerGridBox.height
     );
-    this.gridInner.style.transform = `scale(${scale}) translateY(1.5%)`;
+    this.gridInner.style.transform = `scale(${scale})`;
   }
 
   initDemo() {
     this.gridInner = document.querySelector(".grid__inner");
-
-    function addEventListenerByClass(className, event, fn) {
-      var list = document.getElementsByClassName(className);
-      for (var i = 0, len = list.length; i < len; i++) {
-        list[i].addEventListener(event, fn, false);
-      }
-    }
-
     this.cursor = document.querySelector(".custom-cursor");
 
     document.addEventListener("mousemove", ev => {
@@ -73,10 +65,13 @@ class Primary {
       this.cursor.classList.remove("is-visible");
     };
 
-    // addEventListenerByClass("grid", "mousemove", handleMouseLeave);
-    addEventListenerByClass("grid__item", "mouseenter", handleMouseEnter);
-    addEventListenerByClass("pswp__container", "mouseenter", handleMouseEnter);
-    addEventListenerByClass("grid__item", "mouseleave", handleMouseLeave);
+    Util.addEventListenerByClass("grid__item", "mouseenter", handleMouseEnter);
+    Util.addEventListenerByClass(
+      "pswp__container",
+      "mouseenter",
+      handleMouseEnter
+    );
+    Util.addEventListenerByClass("grid__item", "mouseleave", handleMouseLeave);
   }
 
   initPhotoSwipeFromDOM(gallerySelector) {

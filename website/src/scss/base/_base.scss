@@ -195,14 +195,6 @@ body {
   --color-info: #19caff;
 }
 
-.demo-2 {
-  --color-text: #333;
-  --color-bg: #bee897;
-  --color-link: #72af3a;
-  --color-link-hover: #485a36;
-  --color-info: #fff;
-}
-
 .demo-3 {
   --color-text: #fff;
   --color-bg: #193ccf;
@@ -327,6 +319,7 @@ main {
   padding: 1.5em;
   pointer-events: none;
   grid-template-columns: 50% 50%;
+  // grid-template-rows: auto calc(100vh - 4em - 100px) 4em;
   grid-template-rows: auto auto 4em;
   grid-template-areas:
     "header ..."
@@ -391,6 +384,7 @@ main {
   white-space: nowrap;
   text-transform: lowercase;
   pointer-events: none;
+  display: none;
 }
 
 .demo span::before {
@@ -450,9 +444,11 @@ a.demo--current {
     right: 100%;
     display: none;
     margin: 0 1em 0 0;
+    display: none;
   }
   .demo--current span {
     display: block;
+    display: none;
   }
 }
 

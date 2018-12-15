@@ -200,7 +200,11 @@ const buildScripts = mode => done => {
             cb();
           }),
           gulpBabel({ presets: [["env", babelConfig]] }),
-          ...(mode === "production" ? [gulpUglify()] : []),
+          ...(mode === "production"
+            ? [
+                /*gulpUglify()*/
+              ]
+            : []),
           gulpSourcemaps.write("./"),
           gulp.dest(distPath("js")),
           browserSync.stream()
