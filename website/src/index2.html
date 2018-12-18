@@ -78,7 +78,7 @@
 
 				<div class="arrow-cursor">
 					<svg class="arrow-cursor__icon" viewBox="0 0 117.25 86.75">
-						<path class="arrow-cursor__path" d="M111.36,42.54,74.59,5.77a7,7,0,0,0-9.9,9.9L85.27,36.25H6.35a1,1,0,0,0-1,1v12a1,1,0,0,0,1,1H85.27L64.69,70.83a7,7,0,0,0,9.9,9.9L111.36,44A1,1,0,0,0,111.36,42.54Z"/>
+						<path class="arrow-cursor__path" d="M111.45,42.5,74.65,5.7l-9.9,9.9,20.6,20.6H6.45v14h78.9L64.75,70.8l9.9,9.9,36.8-36.8A1,1,0,0,0,111.45,42.5Z"/>
 					</svg>
 				</div>
 
@@ -86,23 +86,23 @@
 
 					<div class="swiper-container">
 						<div class="swiper-wrapper">
-							<div class="swiper-slide">
-								<img class="swiper-slide__img" src="img/02/n2.jpg" alt="">
+							<div class="swiper-slide swiper-slide--wide">
+								<img class="swiper-slide__img lazyload" data-src="img/02/n2.jpg" alt="">
 							</div>
-							<div class="swiper-slide">
-								<img class="swiper-slide__img" src="img/02/n1.jpg" alt="">
+							<div class="swiper-slide swiper-slide--portrait">
+								<img class="swiper-slide__img lazyload" data-src="img/02/n1.jpg" alt="">
 							</div>
-							<div class="swiper-slide">
-								<img class="swiper-slide__img" src="img/02/n4.jpg" alt="">
+							<div class="swiper-slide swiper-slide--wide">
+								<img class="swiper-slide__img lazyload" data-src="img/02/n4.jpg" alt="">
 							</div>
-							<div class="swiper-slide">
-								<img class="swiper-slide__img" src="img/02/02.jpg" alt="">
+							<div class="swiper-slide swiper-slide--portrait">
+								<img class="swiper-slide__img lazyload" data-src="img/02/02.jpg" alt="">
 							</div>
-							<div class="swiper-slide">
-									<img class="swiper-slide__img" src="img/02/n5.jpg" alt="">
+							<div class="swiper-slide swiper-slide--square">
+									<img class="swiper-slide__img lazyload" data-src="img/02/n5.jpg" alt="">
 								</div>
-							<div class="swiper-slide">
-								<img class="swiper-slide__img" src="img/02/01.jpg" alt="">
+							<div class="swiper-slide swiper-slide--portrait">
+								<img class="swiper-slide__img lazyload" data-src="img/02/01.jpg" alt="">
 							</div>
 
 						</div>
@@ -116,6 +116,11 @@
 		</main>
 
 	<!-- <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script> -->
+	<script>
+		window.lazySizesConfig = window.lazySizesConfig || {};
+    window.lazySizesConfig.init = false;
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.1.5/lazysizes.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.js"></script>
   <script src="./js/scripts.js"></script>
 </body>

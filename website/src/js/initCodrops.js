@@ -21,7 +21,6 @@ const initCodrops = () => {
   document.addEventListener("keydown", ev => {
     const keyCode = ev.keyCode || ev.which;
     let linkEl;
-    console.log(keyCode);
     if (keyCode === 37) {
       linkEl = current > 0 ? navdemos[current - 1] : navdemos[total - 1];
     } else if (keyCode === 39) {

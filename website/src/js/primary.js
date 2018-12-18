@@ -21,10 +21,10 @@ class Primary {
     initCodrops();
     this.initDemo();
     this.initPhotoSwipeFromDOM(".my-gallery");
-    window.onload = () => {
-      this.scaleGrid();
-      this.gridInner.style.opacity = 1;
-    };
+    this.scaleGrid();
+    // window.onload = () => {
+    //   this.gridInner.style.opacity = 1;
+    // };sss
     window.addEventListener(
       "resize",
       Util.debounce(e => {
@@ -37,7 +37,7 @@ class Primary {
     this.gridInner.style.transform = `scale(1)`;
     const innerGridBox = this.gridInner.getBoundingClientRect();
     const availableWidth = window.innerWidth - 48;
-    const availableHeight = window.innerHeight - 180;
+    const availableHeight = window.innerHeight - 230;
     const scale = Math.min(
       availableWidth / innerGridBox.width,
       availableHeight / innerGridBox.height
