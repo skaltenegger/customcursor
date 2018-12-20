@@ -50,7 +50,9 @@ html {
   box-sizing: border-box;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
@@ -77,4 +79,8 @@ td,
 th {
   padding: 0;
   text-align: left;
+}
+
+svg {
+  display: block;
 }

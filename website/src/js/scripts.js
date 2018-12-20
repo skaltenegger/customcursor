@@ -1,15 +1,20 @@
-import Primary from "./primary";
-import Secondary from "./secondary";
-import Tertiary from "./tertiary";
+import Demo1 from "./demo1";
+import Demo2 from "./demo2";
+import Demo3 from "./demo3";
+import Demo4 from "./demo4";
 
 if (document.querySelector(".demo-1")) {
-  const primary = new Primary();
+  const demo1 = new Demo1();
 }
 
 if (document.querySelector(".demo-2")) {
-  const secondary = new Secondary();
+  const demo2 = new Demo2();
 }
 
 if (document.querySelector(".demo-3")) {
-  const tertiary = new Tertiary();
+  const demo3 = new Demo3();
+}
+
+if (document.querySelector(".demo-4")) {
+  const demo4 = new Demo4();
 }

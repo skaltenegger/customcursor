@@ -16,15 +16,12 @@ import Util from "./utils/util";
  * http://www.codrops.com
  */
 
-class Primary {
+class Demo1 {
   constructor() {
     initCodrops();
     this.initDemo();
     this.initPhotoSwipeFromDOM(".my-gallery");
     this.scaleGrid();
-    // window.onload = () => {
-    //   this.gridInner.style.opacity = 1;
-    // };sss
     window.addEventListener(
       "resize",
       Util.debounce(e => {
@@ -36,7 +33,7 @@ class Primary {
   scaleGrid() {
     this.gridInner.style.transform = `scale(1)`;
     const innerGridBox = this.gridInner.getBoundingClientRect();
-    const availableWidth = window.innerWidth - 48;
+    const availableWidth = window.innerWidth - 70;
     const availableHeight = window.innerHeight - 230;
     const scale = Math.min(
       availableWidth / innerGridBox.width,
@@ -284,7 +281,6 @@ class Primary {
 
       gallery.listen("close", () => {
         this.cursor.classList.remove("is-closing");
-        //asd
         setTimeout(() => {
           const elementMouseIsOver = document.elementFromPoint(
             this.clientX,
@@ -320,4 +316,4 @@ class Primary {
   }
 }
 
-export default Primary;
+export default Demo1;

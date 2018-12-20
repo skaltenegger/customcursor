@@ -67,10 +67,6 @@
   top: 0;
   z-index: 10000000;
   pointer-events: none;
-  // opacity: 0;
-  &.is-visible {
-    // opacity: 1;
-  }
   &__icon {
     position: absolute;
     left: 0;
@@ -84,17 +80,5 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 1.5px;
-  }
-
-  &.is-right {
-    .arrow-cursor__icon {
-      // transform: rotate(0deg);
-    }
-  }
-
-  &.is-left {
-    .arrow-cursor__icon {
-      // transform: rotate(180deg);
-    }
   }
 }

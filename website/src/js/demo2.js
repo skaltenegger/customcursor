@@ -13,7 +13,7 @@ import Util from "./utils/util";
  * http://www.codrops.com
  */
 
-class Secondary {
+class Demo2 {
   constructor() {
     initCodrops();
     this.initCursor();
@@ -25,8 +25,6 @@ class Secondary {
 
   updateCursorPosition(e) {
     const { clientX, clientY } = e;
-    this.clientX = clientX;
-    this.clientY = clientY;
     TweenMax.to(this.cursor, 0, {
       x: clientX - this.cursorBox.width / 2,
       y: clientY - this.cursorBox.height / 2
@@ -211,4 +209,4 @@ class Secondary {
   }
 }
 
-export default Secondary;
+export default Demo2;

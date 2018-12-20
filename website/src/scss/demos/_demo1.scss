@@ -1,5 +1,9 @@
-.content--demo1 {
-  // display: none;
+.demo-1 {
+  --color-text: #fff;
+  --color-bg: #171717;
+  --color-link: #19caff;
+  --color-link-hover: #19caff;
+  --color-info: #19caff;
 }
 
 .grid {
@@ -96,7 +100,7 @@
   width: 60%;
   height: 1px;
   background: white;
-  transition: transform 0.25s ease;
+  transition: transform 0.1s linear;
 }
 
 .custom-cursor:before {
@@ -110,11 +114,3 @@
   top: 50%;
   transform: translateX(-50%) rotate(-90deg);
 }
-
-// .example {
-//   grid-area: example;
-//   background: red;
-//   grid-column: span 2;
-//   display: flex;
-//   align-items: center;
-// }

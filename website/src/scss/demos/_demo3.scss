@@ -1,0 +1,60 @@
+.demo-3 {
+  --color-text: #fff;
+  --color-bg: #171717;
+  --color-link: #ff0000;
+  --color-link-hover: #ff0000;
+  --color-info: #ff0000;
+  cursor: none !important;
+}
+
+.circle-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+  &--outer {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--color-text);
+    z-index: 5000;
+  }
+  &--inner {
+    width: 5px;
+    height: 5px;
+    z-index: 4000;
+    background: var(--color-text);
+  }
+}
+
+.content--demo3 {
+  .grid {
+    &__inner {
+      justify-content: center;
+    }
+    &__link {
+      display: flex;
+      width: 75px;
+      height: 75px;
+      margin: 0 30px;
+      justify-content: center;
+      align-items: center;
+      cursor: none !important;
+      svg {
+        width: 30px;
+        height: 30px;
+        path {
+          fill: var(--color-text);
+          transition: all 0.2s ease 0s;
+        }
+      }
+      &:hover {
+        svg path {
+          fill: var(--color-link);
+          transition: all 0.2s ease 0.05s;
+        }
+      }
+    }
+  }
+}
