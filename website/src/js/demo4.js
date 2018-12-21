@@ -73,12 +73,12 @@ class Demo4 {
 
     const strokeColor = "#ff0000";
     const strokeWidth = 1.5;
-    const segments = 6;
+    const segments = 8;
     const radius = 15;
 
     const noiseScale = 150;
     const noiseRange = 4;
-    const safeArea = 2.5 * (noiseRange + strokeWidth);
+    const safeArea = 5 * (noiseRange + strokeWidth);
     let isNoisy = false;
 
     var decagon = new paper.Path.RegularPolygon(
