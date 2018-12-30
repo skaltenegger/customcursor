@@ -81,12 +81,18 @@
 				<div class="grid">
 					<div class="grid__inner">
             <div class="image-wrapper">
-
+              <div class="image-wrapper__inner">
+                <img data-src="img/05/b1.jpg" class="image-wrapper__img lazyload" data-index="1" alt="Bike No. 1" />
+                <img data-src="img/05/b2.jpg" class="image-wrapper__img lazyload" data-index="2" alt="Bike No. 1" />
+                <img data-src="img/05/b3.jpg" class="image-wrapper__img lazyload" data-index="3" alt="Bike No. 1" />
+                <img data-src="img/05/b4.jpg" class="image-wrapper__img lazyload" data-index="4" alt="Bike No. 1" />
+              </div>
             </div>
-            <nav class="nav">
-              <a href="#" class="nav__link">No. 1</a>
-              <a href="#" class="nav__link">No. 2</a>
-              <a href="#" class="nav__link">No. 3</a>
+            <nav class="nav" data-last-active="1">
+              <a href="#" class="nav__link is-active" data-index="1">1</a>
+              <a href="#" class="nav__link" data-index="2">2</a>
+              <a href="#" class="nav__link" data-index="3">3</a>
+              <a href="#" class="nav__link" data-index="4">4</a>
             </nav>
           </div>
 
@@ -95,7 +101,8 @@
 
 		</main>
 
-	<!-- <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script> -->
+  <!-- <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.1.5/lazysizes.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-core.min.js"></script>
   <script src="./js/scripts.js"></script>
 </body>

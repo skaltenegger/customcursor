@@ -5,20 +5,26 @@
   --color-link: #2edf16;
   --color-link-hover: #2edf16;
   --color-info: #2edf16;
-  cursor: none !important;
+  --image-height: 55vh;
+  --cursor-width: 25px;
+  --link-width: 35px;
+  // cursor: none !important;
+  a {
+    // cursor: none;
+  }
 }
 
 .square-cursor {
   position: fixed;
-  left: 0;
-  top: 0;
+  left: -1px;
+  top: -2px;
   pointer-events: none;
   opacity: 0;
-  width: 13px;
-  height: 13px;
+  width: var(--cursor-width);
+  height: var(--cursor-width);
   border: 1px solid var(--color-link);
   z-index: 5000;
-  transform: rotate(-45deg);
+  // transform: rotate(-45deg);
 }
 
 .demo-5 {
@@ -26,19 +32,47 @@
     justify-content: center;
     .image-wrapper {
       width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+      &__inner {
+        height: var(--image-height);
+        width: 0;
+        padding-left: calc(var(--image-height) * 3 / 2);
+        background: #2b2b2b;
+        position: relative;
+      }
+      &__img {
+        opacity: 0;
+        &.is-visible.lazyloaded {
+          opacity: 1;
+        }
+      }
     }
     .nav {
       display: flex;
       &__link {
         display: inline-flex;
-        padding: 10px 20px;
+        // padding: 10px 20px;
+        width: var(--link-width);
+        height: var(--link-width);
         border: 1px solid var(--color-line);
-        text-transform: uppercase;
+        justify-content: center;
+        align-items: center;
+        // text-transform: uppercase;
         letter-spacing: 2px;
         font-size: 0.8em;
         color: var(--color-line);
+        transition: all 0.25s ease;
         &:not(:last-child) {
           border-right: 0;
+        }
+        &:hover,
+        &.is-active {
+          color: var(--color-link);
+        }
+        &.is-active {
+          border: 1px solid var(--color-link);
         }
       }
     }

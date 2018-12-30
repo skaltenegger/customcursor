@@ -94,8 +94,6 @@ class Demo4 {
     const noiseValues = [];
     const coordinates = [];
 
-    paper.view.draw();
-
     paper.view.onFrame = event => {
       // scale up the shape
       if (
@@ -108,7 +106,8 @@ class Demo4 {
       // while stuck, do perlin noise
       if (
         this.outerCursor.classList.contains("is-stuck") &&
-        decagon.bounds.width >= bounds.width - safeArea
+        decagon.bounds.width >= bounds.width - safeArea &&
+        true
       ) {
         isNoisy = true;
 
@@ -137,17 +136,21 @@ class Demo4 {
       // scale down the shape
       if (
         !this.outerCursor.classList.contains("is-stuck") &&
-        decagon.bounds.width > 33
+        decagon.bounds.width > 30
       ) {
-        decagon.scale(0.92);
+        const scaleDown = 0.92;
+        decagon.scale(scaleDown);
         if (isNoisy) {
           decagon.segments.map((segment, i) => {
             segment.point.set(coordinates[i][0], coordinates[i][1]);
           });
           isNoisy = false;
         }
+        decagon.smooth();
       }
     };
+
+    paper.view.draw();
   }
 
   initHovers() {

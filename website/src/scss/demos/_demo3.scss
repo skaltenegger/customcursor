@@ -6,6 +6,9 @@
   --color-link-hover: #ff0000;
   --color-info: #ff0000;
   cursor: none !important;
+  a {
+    cursor: none;
+  }
 }
 
 .circle-cursor {
@@ -94,7 +97,7 @@
       height: 75px;
       justify-content: center;
       align-items: center;
-      cursor: none !important;
+      // cursor: none !important;
       .hamburger {
         display: block;
         width: 26px;
@@ -108,6 +111,7 @@
           width: 100%;
           height: 2px;
           background: var(--color-text);
+          z-index: 0;
           &:nth-child(1) {
             top: 0px;
           }
@@ -117,22 +121,38 @@
           &:nth-child(3) {
             top: 16px;
           }
-          &:before {
+          &:before,
+          &:after {
             position: absolute;
             content: "";
             display: block;
-            left: 0;
             top: 0;
             height: 100%;
-            background: var(--color-link);
             width: 0;
-            transition: all 0.3s linear;
+            right: 0;
+            left: auto;
+          }
+          &:before {
+            z-index: 1;
+            background: var(--color-link);
+            transition: all 0.15s linear 0s;
+          }
+          &:after {
+            z-index: 2;
+            background: var(--color-bg);
+            transition: all 0.15s linear 0.3s;
           }
           &:nth-child(2):before {
-            transition: all 0.3s linear;
+            transition-delay: 0.15s;
           }
           &:nth-child(3):before {
-            transition: all 0.3s linear;
+            transition-delay: 0.3s;
+          }
+          &:nth-child(2):after {
+            transition-delay: 0.45s;
+          }
+          &:nth-child(3):after {
+            transition-delay: 0.6s;
           }
         }
       }
@@ -149,7 +169,7 @@
             height: 100%;
             background: var(--color-text);
             margin-left: 2px;
-            transition: all 0.2s ease 0s;
+            transition: all 0.2s linear 0s;
           }
           .knob {
             width: 6px;
@@ -177,6 +197,9 @@
           transition: all 0.2s ease 0s;
         }
       }
+      .magnifyer {
+        transition: all 0.2s ease;
+      }
       &:hover {
         svg path {
           fill: var(--color-link);
@@ -184,16 +207,31 @@
         }
         .hamburger {
           span {
-            background: var(--color-link);
+            &:after,
             &:before {
               width: 100%;
-              transition: all 0.3s linear;
+              left: 0;
+              right: auto;
+            }
+            &:after {
+              z-index: 1;
+              transition: all 0.15s linear 0s;
+            }
+            &:before {
+              z-index: 2;
+              transition: all 0.15s linear 0.3s;
+            }
+            &:nth-child(2):after {
+              transition-delay: 0.15s;
+            }
+            &:nth-child(3):after {
+              transition-delay: 0.3s;
             }
             &:nth-child(2):before {
-              transition: all 0.3s linear;
+              transition-delay: 0.45s;
             }
             &:nth-child(3):before {
-              transition: all 0.3s linear;
+              transition-delay: 0.6s;
             }
           }
         }
@@ -215,6 +253,13 @@
           &:nth-child(3) .knob {
             top: 12px;
           }
+        }
+        .avatar__head {
+          transform: translateY(-3px);
+        }
+        .magnifyer {
+          transform: rotate(88deg);
+          transform-origin: 45% 43%;
         }
       }
     }

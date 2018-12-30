@@ -6,11 +6,6 @@
   --color-info: #ff0000;
   --button-size: 100px;
   cursor: none !important;
-}
-
-.demo-3,
-.demo-4,
-.demo-5 {
   a {
     cursor: none;
   }
@@ -40,10 +35,17 @@
       width: 100%;
       height: 100%;
     }
-    &.is-stuck {
-      .circle-cursor__canvas {
-        border: 2px solid var(--color-bg);
-      }
+    &.is-stuck:before {
+      content: "";
+      position: absolute;
+      left: 0px;
+      top: 0;
+      width: 1px;
+      // background: var(--color-bg);
+      // // background: red;
+      opacity: 1;
+      height: 100%;
+      z-index: 10000000000000;
     }
   }
 
@@ -58,7 +60,7 @@
         height: 76px;
         justify-content: center;
         align-items: center;
-        cursor: none !important;
+        // cursor: none !important;
         svg {
           width: 30px;
           height: 30px;
