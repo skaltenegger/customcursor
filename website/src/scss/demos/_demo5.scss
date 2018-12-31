@@ -6,25 +6,34 @@
   --color-link-hover: #2edf16;
   --color-info: #2edf16;
   --image-height: 55vh;
-  --cursor-width: 25px;
+
+  --cursor-width: 22px;
   --link-width: 35px;
-  // cursor: none !important;
+
+  cursor: none !important;
   a {
-    // cursor: none;
+    cursor: none;
   }
 }
 
 .square-cursor {
   position: fixed;
-  left: -1px;
-  top: -2px;
+  left: 0;
+  top: 0;
   pointer-events: none;
   opacity: 0;
-  width: var(--cursor-width);
-  height: var(--cursor-width);
-  border: 1px solid var(--color-link);
   z-index: 5000;
-  // transform: rotate(-45deg);
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__inner {
+    width: var(--cursor-width);
+    height: var(--cursor-width);
+    border: 1px solid var(--color-link);
+    z-index: 5000;
+  }
 }
 
 .demo-5 {
@@ -44,8 +53,10 @@
       }
       &__img {
         opacity: 0;
+        transition: none;
         &.is-visible.lazyloaded {
           opacity: 1;
+          transition: none;
         }
       }
     }
@@ -53,17 +64,15 @@
       display: flex;
       &__link {
         display: inline-flex;
-        // padding: 10px 20px;
         width: var(--link-width);
         height: var(--link-width);
         border: 1px solid var(--color-line);
         justify-content: center;
         align-items: center;
-        // text-transform: uppercase;
         letter-spacing: 2px;
         font-size: 0.8em;
         color: var(--color-line);
-        transition: all 0.25s ease;
+        // transition: all 0.25s ease;
         &:not(:last-child) {
           border-right: 0;
         }
