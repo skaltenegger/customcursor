@@ -43,6 +43,10 @@ class Demo5 {
                 rotation: -45
               });
               this.cursor.classList.add("is-visible");
+              this.cursorOriginals = {
+                width: this.cursorObjectBox.width,
+                height: this.cursorObjectBox.height
+              };
             }
           });
         });
@@ -69,25 +73,11 @@ class Demo5 {
       const { clientX, clientY } = e;
       const linkBox = target.getBoundingClientRect();
 
-      this.cursorOriginals = {
-        width: this.cursorObjectBox.width,
-        height: this.cursorObjectBox.height
-      };
-
       const activeItem = document.querySelector(".nav__link.is-active");
-      if (this.nav.dataset.lastActive !== target.dataset.index) {
-        activeItem && activeItem.classList.remove("is-active");
-        // show new image
-        document
-          .querySelectorAll(".image-wrapper__img")
-          .forEach(image => image.classList.remove("is-visible"));
-        document
-          .querySelector(
-            `.image-wrapper__img[data-index="${target.dataset.index}"]`
-          )
-          .classList.add("is-visible");
+      if (activeItem && this.nav.dataset.lastActive !== target.dataset.index) {
+        this.nav.dataset.lastActive = activeItem.dataset.index;
+        activeItem.classList.remove("is-active");
       }
-      this.nav.dataset.lastActive = target.dataset.index;
 
       this.cursorIsStuck = true;
       TweenMax.to(this.cursor, 0.25, {
@@ -119,12 +109,32 @@ class Demo5 {
       });
     };
 
+    const handleMouseClick = e => {
+      const target = e.currentTarget;
+      const activeItem = document.querySelector(".nav__link.is-active");
+      if (this.nav.dataset.lastActive !== target.dataset.index) {
+        activeItem && activeItem.classList.remove("is-active");
+
+        // show new image
+        document
+          .querySelectorAll(".image-wrapper__img")
+          .forEach(image => image.classList.remove("is-visible"));
+        document
+          .querySelector(
+            `.image-wrapper__img[data-index="${target.dataset.index}"]`
+          )
+          .classList.add("is-visible");
+      }
+      this.nav.dataset.lastActive = target.dataset.index;
+    };
+
     // show the first image
     document
       .querySelector('.image-wrapper__img[data-index="1"]')
       .classList.add("is-visible");
 
     Util.addEventListenerByClass("nav__link", "mouseenter", handleMouseEnter);
+    Util.addEventListenerByClass("nav__link", "click", handleMouseClick);
     Util.addEventListenerByClass("nav", "mouseleave", handleMouseLeave);
   }
 }

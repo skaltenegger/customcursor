@@ -72,7 +72,7 @@
         letter-spacing: 2px;
         font-size: 0.8em;
         color: var(--color-line);
-        // transition: all 0.25s ease;
+        transition: none;
         &:not(:last-child) {
           border-right: 0;
         }
