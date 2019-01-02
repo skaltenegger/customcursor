@@ -21,6 +21,7 @@ class Demo1 {
     initCodrops();
     this.initDemo();
     this.initPhotoSwipeFromDOM(".my-gallery");
+
     this.scaleGrid();
     window.addEventListener(
       "resize",
@@ -43,23 +44,44 @@ class Demo1 {
   }
 
   initDemo() {
+    this.easing = Back.easeOut.config(1.7);
     this.gridInner = document.querySelector(".grid__inner");
-    this.cursor = document.querySelector(".custom-cursor");
 
-    document.addEventListener("mousemove", ev => {
-      const { clientX, clientY } = ev;
-      this.clientX = clientX;
-      this.clientY = clientY;
+    this.cursorWrapper = document.querySelector(".cursor-wrapper");
+    this.innerCursor = document.querySelector(".custom-cursor__inner");
+    this.outerCursor = document.querySelector(".custom-cursor__outer");
 
-      TweenMax.to(this.cursor, 0, { x: clientX, y: clientY });
+    this.cursorWrapperBox = this.cursorWrapper.getBoundingClientRect();
+    this.innerCursorBox = this.innerCursor.getBoundingClientRect();
+    this.outerCursorBox = this.outerCursor.getBoundingClientRect();
+
+    document.addEventListener("mousemove", e => {
+      if (!this.cursorWrapper.classList.contains("is-visible")) {
+        this.setCursorPosition(e, () => {
+          TweenMax.set(this.cursorWrapper, {
+            opacity: 1,
+            onComplete: () => {
+              this.cursorWrapper.classList.add("is-visible");
+            }
+          });
+        });
+      }
+
+      this.setCursorPosition(e);
     });
 
     const handleMouseEnter = e => {
-      this.cursor.classList.add("is-visible");
+      const fullSize = 40;
+      TweenMax.to(this.outerCursor, 0.3, {
+        backgroundColor: "transparent",
+        width: fullSize,
+        height: fullSize,
+        ease: this.easing
+      });
     };
 
     const handleMouseLeave = e => {
-      this.cursor.classList.remove("is-visible");
+      this.mouseLeaveAnimation();
     };
 
     Util.addEventListenerByClass("grid__item", "mouseenter", handleMouseEnter);
@@ -69,6 +91,60 @@ class Demo1 {
       handleMouseEnter
     );
     Util.addEventListenerByClass("grid__item", "mouseleave", handleMouseLeave);
+  }
+
+  mouseLeaveAnimation() {
+    TweenMax.to(this.outerCursor, 0.3, {
+      backgroundColor: "#ffffff",
+      width: this.outerCursorBox.width,
+      height: this.outerCursorBox.height,
+      ease: this.easing
+    });
+  }
+
+  setCursorPosition(e, onComplete = () => {}) {
+    const { clientX, clientY } = e;
+    this.clientX = clientX;
+    this.clientY = clientY;
+
+    TweenMax.to(this.cursorWrapper, 0, {
+      x: clientX - this.cursorWrapperBox.width / 2,
+      y: clientY - this.cursorWrapperBox.height / 2,
+      onComplete: onComplete
+    });
+  }
+
+  openGalleryActions() {
+    this.scaleCursor();
+    this.innerCursor.classList.add("is-closing");
+    this.cursorWrapper.classList.add("has-blend-mode");
+  }
+
+  closeGalleryactions() {
+    this.scaleCursor();
+    this.innerCursor.classList.remove("is-closing");
+    this.cursorWrapper.classList.remove("has-blend-mode");
+    setTimeout(() => {
+      const elementMouseIsOver = document.elementFromPoint(
+        this.clientX,
+        this.clientY
+      );
+      if (!elementMouseIsOver.classList.contains("grid__thumbnail")) {
+        this.mouseLeaveAnimation();
+      }
+    }, 400);
+  }
+
+  scaleCursor() {
+    TweenMax.to(this.outerCursor, 0.1, {
+      scale: 0.7,
+      onComplete: () => {
+        TweenMax.to(this.outerCursor, 0.2, {
+          scale: 1,
+          ease: this.easing
+        });
+      }
+    });
   }
 
   initPhotoSwipeFromDOM(gallerySelector) {
@@ -277,19 +353,10 @@ class Demo1 {
       );
       gallery.init();
 
-      this.cursor.classList.add("is-closing");
+      this.openGalleryActions();
 
       gallery.listen("close", () => {
-        this.cursor.classList.remove("is-closing");
-        setTimeout(() => {
-          const elementMouseIsOver = document.elementFromPoint(
-            this.clientX,
-            this.clientY
-          );
-          if (!elementMouseIsOver.classList.contains("grid__thumbnail")) {
-            this.cursor.classList.remove("is-visible");
-          }
-        }, 400);
+        this.closeGalleryactions();
       });
 
       gallery.listen("initialZoomOut", () => {});

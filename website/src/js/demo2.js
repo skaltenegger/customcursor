@@ -72,6 +72,10 @@ class Demo2 {
         });
       }
     });
+
+    this.swiper.on("slideChange", e => {
+      this.scaleCursor();
+    });
   }
 
   initCursor() {
@@ -206,6 +210,18 @@ class Demo2 {
       "mousemove",
       handleMoveToNext
     );
+  }
+
+  scaleCursor() {
+    TweenMax.to(this.cursor, 0.1, {
+      scale: 0.85,
+      onComplete: () => {
+        TweenMax.to(this.cursor, 0.2, {
+          scale: 1,
+          ease: this.easing
+        });
+      }
+    });
   }
 }
 
