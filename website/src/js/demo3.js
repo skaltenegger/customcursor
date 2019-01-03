@@ -25,6 +25,8 @@ class Demo3 {
     this.innerCursor = document.querySelector(".circle-cursor--inner");
     this.outerCursorBox = this.outerCursor.getBoundingClientRect();
     this.innerCursorBox = this.innerCursor.getBoundingClientRect();
+    this.outerCursorSpeed = 0.3;
+    this.easing = Back.easeOut.config(1.7);
 
     document.addEventListener("mousemove", e => {
       if (!this.innerCursor.classList.contains("is-visible")) {
@@ -45,7 +47,11 @@ class Demo3 {
     });
   }
 
-  setCursorPosition(e, durations = [0, 0.3], complete = () => {}) {
+  setCursorPosition(
+    e,
+    durations = [0, this.outerCursorSpeed],
+    complete = () => {}
+  ) {
     const { clientX, clientY } = e;
     const [innerDuration, outerDuration] = durations;
     TweenMax.to(this.innerCursor, innerDuration, {
@@ -68,16 +74,16 @@ class Demo3 {
     const handleMouseEnter = e => {
       const target = e.currentTarget;
       const box = target.getBoundingClientRect();
-      const x = box.x + box.width / 2;
-      const y = box.y + box.height / 2;
+      const x = box.left + box.width / 2;
+      const y = box.top + box.height / 2;
       this.outerCursorOriginals = {
         width: this.outerCursorBox.width,
         height: this.outerCursorBox.height
       };
       this.outerCursor.classList.add("is-stuck");
       TweenMax.to(this.outerCursor, 0.2, {
-        x: box.x,
-        y: box.y,
+        x: box.left,
+        y: box.top,
         width: box.width,
         height: box.height,
         opacity: 0.4,
@@ -95,15 +101,45 @@ class Demo3 {
       });
     };
 
-    Util.addEventListenerByClass(
-      "grid__link--demo3",
+    Util.addEventListenerBySelector(
+      ".grid__link--demo3",
       "mouseenter",
       handleMouseEnter
     );
-    Util.addEventListenerByClass(
-      "grid__link--demo3",
+    Util.addEventListenerBySelector(
+      ".grid__link--demo3",
       "mouseleave",
       handleMouseLeave
+    );
+
+    const codropsNavEnter = e => {
+      const fullSize = 40;
+      this.outerCursorSpeed = 0;
+      TweenMax.set(this.innerCursor, { opacity: 0 });
+      TweenMax.to(this.outerCursor, 0.3, {
+        backgroundColor: "#ffffff",
+        ease: this.easing
+      });
+    };
+
+    const codropsNavLeave = e => {
+      this.outerCursorSpeed = 0.3;
+      TweenMax.set(this.innerCursor, { opacity: 1 });
+      TweenMax.to(this.outerCursor, 0.3, {
+        backgroundColor: "transparent",
+        ease: this.easing
+      });
+    };
+
+    Util.addEventListenerBySelector(
+      ".demo-3-body .content--fixed a",
+      "mouseenter",
+      codropsNavEnter
+    );
+    Util.addEventListenerBySelector(
+      ".demo-3-body .content--fixed a",
+      "mouseleave",
+      codropsNavLeave
     );
   }
 }

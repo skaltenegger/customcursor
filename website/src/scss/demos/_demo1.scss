@@ -4,9 +4,9 @@
   --color-link: #19caff;
   --color-link-hover: #19caff;
   --color-info: #19caff;
-  cursor: none;
+  &,
   a {
-    cursor: none;
+    cursor: none !important;
   }
 }
 
@@ -51,10 +51,6 @@
   flex: 0 0 calc(97% * 2 / 5);
   line-height: 0;
   margin-bottom: 3%;
-  cursor: none;
-  a {
-    cursor: none;
-  }
   &:nth-child(3),
   &:nth-child(4) {
     margin-bottom: 0;
@@ -85,11 +81,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999999999;
+  z-index: 1600000;
   pointer-events: none;
   // border: 1px solid var(--color-link);
   &.has-blend-mode {
     mix-blend-mode: exclusion;
+  }
+}
+
+// Blend mode fix for Microsoft Edge
+@supports (-ms-ime-align: auto) {
+  .cursor-wrapper {
+    &.has-blend-mode.is-outside {
+      .custom-cursor {
+        &__outer {
+          border-color: black;
+        }
+        &__inner {
+          &:before,
+          &:after {
+            background: black;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -132,5 +147,12 @@
     &.is-closing:after {
       transform: translateX(-50%) rotate(0deg);
     }
+  }
+}
+
+// hide demo content on mobile
+@media (pointer: coarse) {
+  .grid {
+    display: none;
   }
 }

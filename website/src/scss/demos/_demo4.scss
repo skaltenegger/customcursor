@@ -4,8 +4,8 @@
   --color-link: #ff0000;
   --color-link-hover: #ff0000;
   --color-info: #ff0000;
-  --button-size: 100px;
-  cursor: none !important;
+  --button-size: 200vw;
+  &,
   a {
     cursor: none;
   }
@@ -41,8 +41,6 @@
       left: 0px;
       top: 0;
       width: 1px;
-      // background: var(--color-bg);
-      // // background: red;
       opacity: 1;
       height: 100%;
       z-index: 10000000000000;
@@ -60,7 +58,6 @@
         height: 76px;
         justify-content: center;
         align-items: center;
-        cursor: none !important;
         svg {
           width: 30px;
           height: 30px;

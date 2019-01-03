@@ -26,6 +26,7 @@ class Demo4 {
     this.innerCursor = document.querySelector(".demo-4 .circle-cursor--inner");
     this.outerCursorBox = this.outerCursor.getBoundingClientRect();
     this.innerCursorBox = this.innerCursor.getBoundingClientRect();
+    this.outerCursorSpeed = 0.3;
 
     document.addEventListener("mousemove", e => {
       if (!this.innerCursor.classList.contains("is-visible")) {
@@ -46,7 +47,11 @@ class Demo4 {
     });
   }
 
-  setCursorPosition(e, durations = [0, 0.3], complete = () => {}) {
+  setCursorPosition(
+    e,
+    durations = [0, this.outerCursorSpeed],
+    complete = () => {}
+  ) {
     const { clientX, clientY } = e;
     const [innerDuration, outerDuration] = durations;
     TweenMax.to(this.innerCursor, innerDuration, {
@@ -68,7 +73,11 @@ class Demo4 {
   initCanvas() {
     // paper.install(window);
     const canvas = document.querySelector(".circle-cursor__canvas");
-    const bounds = canvas.getBoundingClientRect();
+    const canvasBounds = canvas.getBoundingClientRect();
+    const shapeBounds = {
+      width: 100,
+      height: 100
+    };
     paper.setup(canvas);
 
     const strokeColor = "#ff0000";
@@ -82,7 +91,7 @@ class Demo4 {
     let isNoisy = false;
 
     var decagon = new paper.Path.RegularPolygon(
-      new paper.Point(bounds.width / 2, bounds.height / 2),
+      new paper.Point(canvasBounds.width / 2, canvasBounds.height / 2),
       segments,
       radius
     );
@@ -94,11 +103,13 @@ class Demo4 {
     const noiseValues = [];
     const coordinates = [];
 
+    paper.view.draw();
+
     paper.view.onFrame = event => {
       // scale up the shape
       if (
         this.outerCursor.classList.contains("is-stuck") &&
-        decagon.bounds.width < bounds.width - safeArea
+        decagon.bounds.width < shapeBounds.width - safeArea
       ) {
         decagon.scale(1.08);
       }
@@ -106,7 +117,7 @@ class Demo4 {
       // while stuck, do perlin noise
       if (
         this.outerCursor.classList.contains("is-stuck") &&
-        decagon.bounds.width >= bounds.width - safeArea &&
+        decagon.bounds.width >= shapeBounds.width - safeArea &&
         true
       ) {
         isNoisy = true;
@@ -148,17 +159,29 @@ class Demo4 {
         }
         decagon.smooth();
       }
-    };
 
-    paper.view.draw();
+      // hover state for codrops nav items
+      if (
+        this.outerCursor.classList.contains("is-on-codrops-nav") &&
+        decagon.fillColor !== strokeColor
+      ) {
+        decagon.fillColor = strokeColor;
+      } else if (
+        !this.outerCursor.classList.contains("is-on-codrops-nav") &&
+        decagon.fillColor !== "transparent"
+      ) {
+        decagon.fillColor = "transparent";
+      }
+      paper.view.draw();
+    };
   }
 
   initHovers() {
     const handleMouseEnter = e => {
       const target = e.currentTarget;
       const box = target.getBoundingClientRect();
-      const x = box.x + box.width / 2 - this.outerCursorBox.width / 2;
-      const y = box.y + box.height / 2 - this.outerCursorBox.height / 2;
+      const x = box.left + box.width / 2 - this.outerCursorBox.width / 2;
+      const y = box.top + box.height / 2 - this.outerCursorBox.height / 2;
 
       this.outerCursor.classList.add("is-stuck");
       TweenMax.to(this.outerCursor, 0.2, {
@@ -171,15 +194,38 @@ class Demo4 {
       this.outerCursor.classList.remove("is-stuck");
     };
 
-    Util.addEventListenerByClass(
-      "grid__link--demo4",
+    Util.addEventListenerBySelector(
+      ".grid__link--demo4",
       "mouseenter",
       handleMouseEnter
     );
-    Util.addEventListenerByClass(
-      "grid__link--demo4",
+    Util.addEventListenerBySelector(
+      ".grid__link--demo4",
       "mouseleave",
       handleMouseLeave
+    );
+
+    const codropsNavEnter = e => {
+      this.outerCursorSpeed = 0.1;
+      this.outerCursor.classList.add("is-on-codrops-nav");
+      TweenMax.set(this.innerCursor, { opacity: 0 });
+    };
+
+    const codropsNavLeave = e => {
+      this.outerCursorSpeed = 0.3;
+      this.outerCursor.classList.remove("is-on-codrops-nav");
+      TweenMax.set(this.innerCursor, { opacity: 1 });
+    };
+
+    Util.addEventListenerBySelector(
+      ".demo-4 .content--fixed a",
+      "mouseenter",
+      codropsNavEnter
+    );
+    Util.addEventListenerBySelector(
+      ".demo-4 .content--fixed a",
+      "mouseleave",
+      codropsNavLeave
     );
   }
 

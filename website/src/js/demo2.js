@@ -190,23 +190,23 @@ class Demo2 {
       }
     };
 
-    Util.addEventListenerByClass(
-      "swiper-container",
+    Util.addEventListenerBySelector(
+      ".swiper-container",
       "mousemove",
       handleMouseMove
     );
-    Util.addEventListenerByClass(
-      "swiper-container",
+    Util.addEventListenerBySelector(
+      ".swiper-container",
       "mouseleave",
       handleMouseLeave
     );
-    Util.addEventListenerByClass(
-      "swiper-button-prev",
+    Util.addEventListenerBySelector(
+      ".swiper-button-prev",
       "mousemove",
       handleMoveToPrev
     );
-    Util.addEventListenerByClass(
-      "swiper-button-next",
+    Util.addEventListenerBySelector(
+      ".swiper-button-next",
       "mousemove",
       handleMoveToNext
     );

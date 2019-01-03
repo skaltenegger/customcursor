@@ -27,6 +27,10 @@ class Demo5 {
     this.navBox = this.nav.getBoundingClientRect();
     this.cursorObjectBox = this.cursorInner.getBoundingClientRect();
     this.cursorBox = this.cursor.getBoundingClientRect();
+    this.easing = Back.easeOut.config(1.7);
+    this.green = getComputedStyle(
+      document.querySelector(".demo-5")
+    ).getPropertyValue("--color-link");
 
     this.cursorIsStuck = false;
 
@@ -81,8 +85,8 @@ class Demo5 {
 
       this.cursorIsStuck = true;
       TweenMax.to(this.cursor, 0.25, {
-        x: linkBox.x + linkBox.width / 2 - this.cursorBox.width / 2,
-        y: linkBox.y + linkBox.height / 2 - this.cursorBox.height / 2 - 0.5
+        x: linkBox.left + linkBox.width / 2 - this.cursorBox.width / 2,
+        y: linkBox.top + linkBox.height / 2 - this.cursorBox.height / 2 - 0.5
       });
       TweenMax.to(this.cursorInner, 0.2, {
         rotation: 0,
@@ -133,9 +137,41 @@ class Demo5 {
       .querySelector('.image-wrapper__img[data-index="1"]')
       .classList.add("is-visible");
 
-    Util.addEventListenerByClass("nav__link", "mouseenter", handleMouseEnter);
-    Util.addEventListenerByClass("nav__link", "click", handleMouseClick);
-    Util.addEventListenerByClass("nav", "mouseleave", handleMouseLeave);
+    Util.addEventListenerBySelector(
+      ".nav__link",
+      "mouseenter",
+      handleMouseEnter
+    );
+    Util.addEventListenerBySelector(".nav__link", "click", handleMouseClick);
+    Util.addEventListenerBySelector(".nav", "mouseleave", handleMouseLeave);
+
+    const codropsNavEnter = e => {
+      TweenMax.to(this.cursorInner, 0.2, {
+        scale: 0.8,
+        borderColor: "#ffffff",
+        ease: this.easing
+      });
+    };
+
+    const codropsNavLeave = e => {
+      TweenMax.to(this.cursorInner, 0.2, {
+        scale: 1,
+        opacity: 1,
+        borderColor: "#2edf16",
+        ease: this.easing
+      });
+    };
+
+    Util.addEventListenerBySelector(
+      ".demo-5 .content--fixed a",
+      "mouseenter",
+      codropsNavEnter
+    );
+    Util.addEventListenerBySelector(
+      ".demo-5 .content--fixed a",
+      "mouseleave",
+      codropsNavLeave
+    );
   }
 }
 

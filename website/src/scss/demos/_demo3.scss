@@ -5,7 +5,7 @@
   --color-link: #ff0000;
   --color-link-hover: #ff0000;
   --color-info: #ff0000;
-  cursor: none !important;
+  &,
   a {
     cursor: none;
   }
@@ -22,12 +22,12 @@
     width: 30px;
     height: 30px;
     border: 1px solid var(--color-text);
-    z-index: 5000;
+    z-index: 12000;
   }
   &--inner {
     width: 5px;
     height: 5px;
-    z-index: 4000;
+    z-index: 11000;
     background: var(--color-text);
   }
 }
@@ -97,7 +97,6 @@
       height: 75px;
       justify-content: center;
       align-items: center;
-      cursor: none !important;
       .hamburger {
         display: block;
         width: 26px;

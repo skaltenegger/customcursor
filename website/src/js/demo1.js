@@ -84,13 +84,53 @@ class Demo1 {
       this.mouseLeaveAnimation();
     };
 
-    Util.addEventListenerByClass("grid__item", "mouseenter", handleMouseEnter);
-    Util.addEventListenerByClass(
-      "pswp__container",
+    Util.addEventListenerBySelector(
+      ".grid__item",
       "mouseenter",
       handleMouseEnter
     );
-    Util.addEventListenerByClass("grid__item", "mouseleave", handleMouseLeave);
+    Util.addEventListenerBySelector(
+      ".pswp__container",
+      "mouseenter",
+      handleMouseEnter
+    );
+    Util.addEventListenerBySelector(
+      ".grid__item",
+      "mouseleave",
+      handleMouseLeave
+    );
+
+    const codropsNavEnter = e => {
+      const fullSize = 40;
+      TweenMax.to(this.outerCursor, 0.3, {
+        backgroundColor: "#ffffff",
+        opacity: 0.3,
+        width: fullSize,
+        height: fullSize,
+        ease: this.easing
+      });
+    };
+
+    const codropsNavLeave = e => {
+      TweenMax.to(this.outerCursor, 0.3, {
+        backgroundColor: "#ffffff",
+        opacity: 1,
+        width: this.outerCursorBox.width,
+        height: this.outerCursorBox.height,
+        ease: this.easing
+      });
+    };
+
+    Util.addEventListenerBySelector(
+      ".demo-1 .content--fixed a",
+      "mouseenter",
+      codropsNavEnter
+    );
+    Util.addEventListenerBySelector(
+      ".demo-1 .content--fixed a",
+      "mouseleave",
+      codropsNavLeave
+    );
   }
 
   mouseLeaveAnimation() {
@@ -118,6 +158,7 @@ class Demo1 {
     this.scaleCursor();
     this.innerCursor.classList.add("is-closing");
     this.cursorWrapper.classList.add("has-blend-mode");
+    this.cursorWrapper.classList.remove("is-outside");
   }
 
   closeGalleryactions() {
@@ -355,11 +396,39 @@ class Demo1 {
 
       this.openGalleryActions();
 
+      gallery.listen("initialZoomOut", () => {});
+
       gallery.listen("close", () => {
         this.closeGalleryactions();
       });
 
-      gallery.listen("initialZoomOut", () => {});
+      // Blend Mode Fix for Microsoft Edge
+      const addBlendModeFix = () => {
+        const container = gallery.currItem.container;
+        const image = Array.from(
+          container.querySelectorAll(".pswp__img")
+        ).pop();
+
+        // image.style.cursor = "none";
+
+        const mouseEnter = e => {
+          this.cursorWrapper.classList.remove("is-outside");
+        };
+        image.addEventListener("mouseenter", mouseEnter, false);
+
+        const mouseLeave = e => {
+          this.cursorWrapper.classList.add("is-outside");
+        };
+        image.addEventListener("mouseleave", mouseLeave, false);
+      };
+
+      gallery.listen("initialZoomInEnd", () => {
+        addBlendModeFix();
+      });
+      gallery.listen("afterChange", () => {
+        addBlendModeFix();
+      });
+      // End of Blend Mode Fix for Microsoft Edge
     };
 
     // loop through all gallery elements and bind events

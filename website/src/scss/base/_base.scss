@@ -257,8 +257,10 @@ a:focus {
   display: none;
   padding: 1em;
   text-align: center;
-  color: var(--color-bg);
-  background: var(--color-text);
+  line-height: 1.4;
+  background: var(--color-bg);
+  color: var(--color-link);
+  padding: 2em 1em 1em;
 }
 
 /* Icons */
@@ -354,24 +356,32 @@ main {
   grid-area: demos;
 }
 
-.demo {
-  margin: 0 0.15em;
+.demos__links {
+  display: flex;
+  position: fixed;
+  left: 50%;
+  bottom: 1.5em;
+  transform: translateX(-50%);
 }
 
-.demo:hover,
-.demo:focus {
-  opacity: 0.5;
+.demo {
+  display: flex;
+  line-height: 1;
+  margin: 0 12px;
+  color: var(--color-link);
+  transition: color 0.2s ease;
+  height: 24px;
+  align-items: center;
+  span {
+    transition: color 0.2s ease;
+  }
+}
+a.demo--current span {
+  color: var(--color-text);
 }
 
 .demo span {
   white-space: nowrap;
-  text-transform: lowercase;
-  pointer-events: none;
-  display: none;
-}
-
-.demo span::before {
-  content: "#";
 }
 
 a.demo--current {
@@ -394,6 +404,15 @@ a.demo--current {
   padding: 0.25em;
 }
 
+@media screen and (max-width: 55em) {
+  .info {
+    margin: 0;
+  }
+  .codrops-links {
+    margin: 0;
+  }
+}
+
 @media screen and (min-width: 55em) {
   .icon--keyboard {
     position: absolute;
@@ -404,70 +423,45 @@ a.demo--current {
     height: 46px;
     fill: var(--color-link);
   }
+
   .demos {
     display: flex;
     padding-right: 80px;
-
     justify-self: end;
   }
-  .demo {
-    display: block;
-    width: 17px;
-    height: 17px;
-    margin: 0 4px;
-    border-radius: 50%;
-    background: var(--color-link);
-  }
-  a.demo--current {
-    background: var(--color-link-hover);
-  }
+
   .demo span {
     line-height: 1;
-    position: absolute;
-    right: 100%;
-    display: none;
-    margin: 0 1em 0 0;
-    display: none;
-  }
-  .demo--current span {
-    display: block;
-    display: none;
   }
 }
 
-@media screen and (max-width: 55em) {
+// show message on mobile
+@media (pointer: coarse) {
   .message {
     display: block;
   }
-  .content {
-    flex-direction: column;
-    height: auto;
-    min-height: 0;
-    padding-bottom: 10em;
+  .demo-2 .message {
+    background: none;
   }
-  .content--fixed {
-    position: relative;
-    z-index: 1000;
-    display: block;
-    padding: 0.85em;
+  .cursor-wrapper,
+  .arrow-cursor,
+  .circle-cursor,
+  .square-cursor {
+    display: none !important;
   }
-  .codrops-header {
-    flex-direction: column;
+}
+
+// align message to center on larger touch devices
+@media (pointer: coarse) AND (min-width: 55em) {
+  .message {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
     align-items: center;
-  }
-  .codrops-header__title {
-    font-weight: bold;
-    padding-bottom: 0.25em;
-    text-align: center;
-  }
-  .info {
-    margin: 0;
-  }
-  .github {
-    display: block;
-    margin: 1em auto;
-  }
-  .codrops-links {
-    margin: 0;
+    justify-content: center;
   }
 }

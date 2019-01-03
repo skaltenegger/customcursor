@@ -51,8 +51,8 @@ class Util {
     };
   }
 
-  static addEventListenerByClass(className, event, fn) {
-    var list = document.getElementsByClassName(className);
+  static addEventListenerBySelector(className, event, fn) {
+    var list = document.querySelectorAll(className);
     for (var i = 0, len = list.length; i < len; i++) {
       list[i].addEventListener(event, fn, false);
     }
