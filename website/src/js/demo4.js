@@ -30,6 +30,7 @@ class Demo4 {
     this.lastX = 0;
     this.lastY = 0;
     this.isStuck = false;
+    const { paper } = window;
 
     document.addEventListener("mouseenter", e => {
       this.group.position = new paper.Point(e.clientX, e.clientY);

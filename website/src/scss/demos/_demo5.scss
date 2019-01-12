@@ -10,10 +10,10 @@
   --cursor-width: 22px;
   --link-width: 35px;
 
-  cursor: none !important;
-  a {
-    cursor: none;
-  }
+  // cursor: none !important;
+  // a {
+  //   cursor: none;
+  // }
 }
 
 .square-cursor {
@@ -21,7 +21,7 @@
   left: 0;
   top: 0;
   pointer-events: none;
-  opacity: 0;
+  opacity: 1;
   z-index: 5000;
   width: 100px;
   height: 100px;
