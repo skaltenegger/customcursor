@@ -73,11 +73,14 @@
 
 .cursor-wrapper {
   position: fixed;
-  opacity: 0;
+  opacity: 1;
   width: 100px;
   height: 100px;
   left: 0;
   top: 0;
+  margin-left: -50px;
+  margin-top: -50px;
+  transform: translate(-100%, -100%);
   display: flex;
   align-items: center;
   justify-content: center;

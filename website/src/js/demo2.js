@@ -1,5 +1,4 @@
-import initCodrops from "./initCodrops";
-import MorphSVGPlugin from "./utils/MorphSVGPlugin";
+import initPageTransitions from "./initPageTransitions";
 import Util from "./utils/util";
 
 /**
@@ -9,82 +8,28 @@ import Util from "./utils/util";
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  *
- * Copyright 2017, Codrops
+ * Copyright 2019, Codrops
  * http://www.codrops.com
  */
 
 class Demo2 {
   constructor() {
-    initCodrops();
-    this.initCursor();
+    initPageTransitions();
+    this.initDemo();
     this.initSwiper();
     window.lazySizes.init();
-    this.easing = Back.easeOut.config(1.7);
-    this.animationDuration = 0.3;
   }
 
-  updateCursorPosition(e) {
-    const { clientX, clientY } = e;
-    TweenMax.to(this.cursor, 0, {
-      x: clientX - this.cursorBox.width / 2,
-      y: clientY - this.cursorBox.height / 2
-    });
-  }
-
-  initSwiper() {
-    this.swiper = new Swiper(".swiper-container", {
-      loop: true,
-      slidesPerView: "auto",
-      spaceBetween: 40,
-      centeredSlides: true,
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      }
-    });
-    this.swiper.on("touchMove", e => {
-      const { clientX, clientY } = e;
-      this.updateCursorPosition(e);
-
-      if (
-        clientX < window.innerWidth / 2 &&
-        this.cursor.classList.contains("is-right") &&
-        !this.cursor.classList.contains("is-left")
-      ) {
-        this.cursor.classList.add("is-left");
-        this.cursor.classList.remove("is-right");
-        TweenMax.to(this.cursorIcon, this.animationDuration, {
-          rotation: -180,
-          ease: this.easing
-        });
-      }
-
-      if (
-        clientX > window.innerWidth / 2 &&
-        this.cursor.classList.contains("is-left") &&
-        !this.cursor.classList.contains("is-right")
-      ) {
-        this.cursor.classList.add("is-right");
-        this.cursor.classList.remove("is-left");
-        TweenMax.to(this.cursorIcon, this.animationDuration, {
-          rotation: 0,
-          ease: this.easing
-        });
-      }
-    });
-
-    this.swiper.on("slideChange", e => {
-      this.scaleCursor();
-    });
-  }
-
-  initCursor() {
+  initDemo() {
     this.cursor = document.querySelector(".arrow-cursor");
     this.cursorIcon = document.querySelector(".arrow-cursor__icon");
     this.cursorBox = this.cursor.getBoundingClientRect();
     this.swiperBox = document
       .querySelector(".swiper-container")
       .getBoundingClientRect();
+
+    this.easing = Back.easeOut.config(1.7);
+    this.animationDuration = 0.3;
 
     TweenMax.to(this.cursorIcon, 0, {
       rotation: -135,
@@ -210,6 +155,61 @@ class Demo2 {
       "mousemove",
       handleMoveToNext
     );
+  }
+
+  updateCursorPosition(e) {
+    const { clientX, clientY } = e;
+    TweenMax.to(this.cursor, 0, {
+      x: clientX - this.cursorBox.width / 2,
+      y: clientY - this.cursorBox.height / 2
+    });
+  }
+
+  initSwiper() {
+    this.swiper = new Swiper(".swiper-container", {
+      loop: true,
+      slidesPerView: "auto",
+      spaceBetween: 40,
+      centeredSlides: true,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      }
+    });
+    this.swiper.on("touchMove", e => {
+      const { clientX, clientY } = e;
+      this.updateCursorPosition(e);
+
+      if (
+        clientX < window.innerWidth / 2 &&
+        this.cursor.classList.contains("is-right") &&
+        !this.cursor.classList.contains("is-left")
+      ) {
+        this.cursor.classList.add("is-left");
+        this.cursor.classList.remove("is-right");
+        TweenMax.to(this.cursorIcon, this.animationDuration, {
+          rotation: -180,
+          ease: this.easing
+        });
+      }
+
+      if (
+        clientX > window.innerWidth / 2 &&
+        this.cursor.classList.contains("is-left") &&
+        !this.cursor.classList.contains("is-right")
+      ) {
+        this.cursor.classList.add("is-right");
+        this.cursor.classList.remove("is-left");
+        TweenMax.to(this.cursorIcon, this.animationDuration, {
+          rotation: 0,
+          ease: this.easing
+        });
+      }
+    });
+
+    this.swiper.on("slideChange", e => {
+      this.scaleCursor();
+    });
   }
 
   scaleCursor() {

@@ -4,7 +4,7 @@
   --color-link: #ff0000;
   --color-link-hover: #ff0000;
   --color-info: #ff0000;
-  --button-size: 200vw;
+  --canvas-size: 200vw;
   &,
   a {
     cursor: none;
@@ -17,33 +17,22 @@
     left: 0;
     top: 0;
     pointer-events: none;
-    border-radius: 50%;
-    opacity: 0;
+    opacity: 1;
     &--outer {
-      width: var(--button-size);
-      height: var(--button-size);
-      border: 0;
+      width: 100vw;
+      height: 100vh;
       z-index: 12000;
+      border-radius: 0;
+      border: 0;
     }
     &--inner {
       width: 5px;
       height: 5px;
+      margin-left: -2.5px;
+      margin-top: -2.5px;
+      border-radius: 50%;
       z-index: 11000;
       background: var(--color-text);
-    }
-    &__canvas {
-      width: 100%;
-      height: 100%;
-    }
-    &.is-stuck:before {
-      content: "";
-      position: absolute;
-      left: 0px;
-      top: 0;
-      width: 1px;
-      opacity: 1;
-      height: 100%;
-      z-index: 10000000000000;
     }
   }
 

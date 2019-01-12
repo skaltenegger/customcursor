@@ -1,5 +1,4 @@
-import initCodrops from "./initCodrops";
-import MorphSVGPlugin from "./utils/MorphSVGPlugin";
+import initPageTransitions from "./initPageTransitions";
 import Util from "./utils/util";
 
 /**
@@ -15,14 +14,18 @@ import Util from "./utils/util";
 
 class Demo3 {
   constructor() {
-    initCodrops();
+    initPageTransitions();
     this.initCursor();
     this.initHovers();
   }
 
   initCursor() {
-    this.outerCursor = document.querySelector(".circle-cursor--outer");
-    this.innerCursor = document.querySelector(".circle-cursor--inner");
+    this.outerCursor = document.querySelector(
+      ".demo-3-body .circle-cursor--outer"
+    );
+    this.innerCursor = document.querySelector(
+      ".demo-3-body .circle-cursor--inner"
+    );
     this.outerCursorBox = this.outerCursor.getBoundingClientRect();
     this.innerCursorBox = this.innerCursor.getBoundingClientRect();
     this.outerCursorSpeed = 0.3;

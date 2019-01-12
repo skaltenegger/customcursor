@@ -1,5 +1,4 @@
-import initCodrops from "./initCodrops";
-import MorphSVGPlugin from "./utils/MorphSVGPlugin";
+import initPageTransitions from "./initPageTransitions";
 import Util from "./utils/util";
 
 /**
@@ -15,7 +14,7 @@ import Util from "./utils/util";
 
 class Demo5 {
   constructor() {
-    initCodrops();
+    initPageTransitions();
     this.initCursor();
     this.initHovers();
   }

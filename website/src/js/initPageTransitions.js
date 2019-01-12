@@ -1,4 +1,4 @@
-const initCodrops = () => {
+const initPageTransitions = () => {
   setTimeout(() => document.body.classList.add("render"), 60);
   const navdemos = Array.from(document.querySelectorAll(".demos__links .demo"));
   const total = navdemos.length;
@@ -32,4 +32,4 @@ const initCodrops = () => {
   });
 };
 
-export default initCodrops;
+export default initPageTransitions;

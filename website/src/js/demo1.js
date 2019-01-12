@@ -1,8 +1,8 @@
 import PhotoSwipe from "photoswipe";
-import PhotoSwipeUI_Default from "photoswipe/src/js/ui/photoswipe-ui-default";
+import PhotoSwipeUIDefault from "photoswipe/src/js/ui/photoswipe-ui-default";
 import TweenMax from "gsap/TweenMax";
 
-import initCodrops from "./initCodrops";
+import initPageTransitions from "./initPageTransitions";
 import Util from "./utils/util";
 
 /**
@@ -12,39 +12,28 @@ import Util from "./utils/util";
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  *
- * Copyright 2017, Codrops
+ * Copyright 2019, Codrops
  * http://www.codrops.com
  */
 
 class Demo1 {
   constructor() {
-    initCodrops();
+    initPageTransitions();
     this.initDemo();
     this.initPhotoSwipeFromDOM(".my-gallery");
 
     this.scaleGrid();
     window.addEventListener(
       "resize",
-      Util.debounce(e => {
+      Util.debounce(() => {
         this.scaleGrid();
       }, 10)
     );
   }
 
-  scaleGrid() {
-    this.gridInner.style.transform = `scale(1)`;
-    const innerGridBox = this.gridInner.getBoundingClientRect();
-    const availableWidth = window.innerWidth - 70;
-    const availableHeight = window.innerHeight - 230;
-    const scale = Math.min(
-      availableWidth / innerGridBox.width,
-      availableHeight / innerGridBox.height
-    );
-    this.gridInner.style.transform = `scale(${scale})`;
-  }
-
   initDemo() {
-    this.easing = Back.easeOut.config(1.7);
+    const { Back } = window;
+    this.easing = Back.easeInOut.config(1.7);
     this.gridInner = document.querySelector(".grid__inner");
 
     this.cursorWrapper = document.querySelector(".cursor-wrapper");
@@ -56,129 +45,67 @@ class Demo1 {
     this.outerCursorBox = this.outerCursor.getBoundingClientRect();
 
     document.addEventListener("mousemove", e => {
-      if (!this.cursorWrapper.classList.contains("is-visible")) {
-        this.setCursorPosition(e, () => {
-          TweenMax.set(this.cursorWrapper, {
-            opacity: 1,
-            onComplete: () => {
-              this.cursorWrapper.classList.add("is-visible");
-            }
-          });
-        });
-      }
-
-      this.setCursorPosition(e);
+      this.clientX = e.clientX;
+      this.clientY = e.clientY;
     });
 
-    const handleMouseEnter = e => {
-      const fullSize = 40;
-      TweenMax.to(this.outerCursor, 0.3, {
-        backgroundColor: "transparent",
-        width: fullSize,
-        height: fullSize,
-        ease: this.easing
+    const render = () => {
+      TweenMax.set(this.cursorWrapper, {
+        x: this.clientX,
+        y: this.clientY
       });
+      requestAnimationFrame(render);
     };
+    requestAnimationFrame(render);
 
-    const handleMouseLeave = e => {
-      this.mouseLeaveAnimation();
-    };
+    this.fullCursorSize = 40;
+    this.enlargeCursorTween = TweenMax.to(this.outerCursor, 0.3, {
+      backgroundColor: "transparent",
+      width: this.fullCursorSize,
+      height: this.fullCursorSize,
+      ease: this.easing,
+      paused: true
+    });
 
-    Util.addEventListenerBySelector(
-      ".grid__item",
-      "mouseenter",
-      handleMouseEnter
-    );
-    Util.addEventListenerBySelector(
-      ".pswp__container",
-      "mouseenter",
-      handleMouseEnter
-    );
-    Util.addEventListenerBySelector(
-      ".grid__item",
-      "mouseleave",
-      handleMouseLeave
-    );
-
-    const codropsNavEnter = e => {
-      const fullSize = 40;
-      TweenMax.to(this.outerCursor, 0.3, {
-        backgroundColor: "#ffffff",
-        opacity: 0.3,
-        width: fullSize,
-        height: fullSize,
-        ease: this.easing
-      });
-    };
-
-    const codropsNavLeave = e => {
-      TweenMax.to(this.outerCursor, 0.3, {
-        backgroundColor: "#ffffff",
-        opacity: 1,
-        width: this.outerCursorBox.width,
-        height: this.outerCursorBox.height,
-        ease: this.easing
-      });
-    };
-
-    Util.addEventListenerBySelector(
-      ".demo-1 .content--fixed a",
-      "mouseenter",
-      codropsNavEnter
-    );
-    Util.addEventListenerBySelector(
-      ".demo-1 .content--fixed a",
-      "mouseleave",
-      codropsNavLeave
-    );
-  }
-
-  mouseLeaveAnimation() {
-    TweenMax.to(this.outerCursor, 0.3, {
+    this.mainNavHoverTween = TweenMax.to(this.outerCursor, 0.3, {
       backgroundColor: "#ffffff",
-      width: this.outerCursorBox.width,
-      height: this.outerCursorBox.height,
-      ease: this.easing
+      opacity: 0.3,
+      width: this.fullCursorSize,
+      height: this.fullCursorSize,
+      ease: this.easing,
+      paused: true
     });
-  }
 
-  setCursorPosition(e, onComplete = () => {}) {
-    const { clientX, clientY } = e;
-    this.clientX = clientX;
-    this.clientY = clientY;
+    const handleMouseEnter = () => {
+      this.enlargeCursorTween.play();
+    };
 
-    TweenMax.to(this.cursorWrapper, 0, {
-      x: clientX - this.cursorWrapperBox.width / 2,
-      y: clientY - this.cursorWrapperBox.height / 2,
-      onComplete: onComplete
+    const handleMouseLeave = () => {
+      this.enlargeCursorTween.reverse();
+    };
+
+    const gridItems = document.querySelectorAll(".grid__item");
+    gridItems.forEach(el => {
+      el.addEventListener("mouseenter", handleMouseEnter);
+      el.addEventListener("mouseleave", handleMouseLeave);
     });
-  }
 
-  openGalleryActions() {
-    this.scaleCursor();
-    this.innerCursor.classList.add("is-closing");
-    this.cursorWrapper.classList.add("has-blend-mode");
-    this.cursorWrapper.classList.remove("is-outside");
-  }
+    const pswpContainer = document.querySelector(".pswp__container");
+    pswpContainer.addEventListener("mouseenter", handleMouseEnter);
 
-  closeGalleryactions() {
-    this.scaleCursor();
-    this.innerCursor.classList.remove("is-closing");
-    this.cursorWrapper.classList.remove("has-blend-mode");
-    setTimeout(() => {
-      const elementMouseIsOver = document.elementFromPoint(
-        this.clientX,
-        this.clientY
-      );
-      if (!elementMouseIsOver.classList.contains("grid__thumbnail")) {
-        this.mouseLeaveAnimation();
-      }
-    }, 400);
-  }
+    const mainNavItems = document.querySelectorAll(".demo-1 .content--fixed a");
+    mainNavItems.forEach(el => {
+      el.addEventListener("mouseenter", () => {
+        this.mainNavHoverTween.play();
+      });
+      el.addEventListener("mouseleave", () => {
+        this.mainNavHoverTween.reverse();
+      });
+    });
 
-  scaleCursor() {
-    TweenMax.to(this.outerCursor, 0.1, {
+    this.bumpCursorTween = TweenMax.to(this.outerCursor, 0.1, {
       scale: 0.7,
+      paused: true,
       onComplete: () => {
         TweenMax.to(this.outerCursor, 0.2, {
           scale: 1,
@@ -188,19 +115,41 @@ class Demo1 {
     });
   }
 
+  openGalleryActions() {
+    this.bumpCursorTween.play();
+    this.innerCursor.classList.add("is-closing");
+    this.cursorWrapper.classList.add("has-blend-mode");
+    this.cursorWrapper.classList.remove("is-outside");
+  }
+
+  closeGalleryactions() {
+    this.bumpCursorTween.play();
+    this.innerCursor.classList.remove("is-closing");
+    this.cursorWrapper.classList.remove("has-blend-mode");
+    setTimeout(() => {
+      const elementMouseIsOver = document.elementFromPoint(
+        this.clientX,
+        this.clientY
+      );
+      if (!elementMouseIsOver.classList.contains("grid__thumbnail")) {
+        this.enlargeCursorTween.reverse();
+      }
+    }, 400);
+  }
+
   initPhotoSwipeFromDOM(gallerySelector) {
     // parse slide data (url, title, size ...) from DOM elements
     // (children of gallerySelector)
     const parseThumbnailElements = el => {
-      var thumbElements = el.childNodes,
-        numNodes = thumbElements.length,
-        items = [],
-        figureEl,
-        linkEl,
-        size,
-        item;
+      const thumbElements = el.childNodes;
+      const numNodes = thumbElements.length;
+      const items = [];
+      let figureEl;
+      let linkEl;
+      let size;
+      let item;
 
-      for (var i = 0; i < numNodes; i++) {
+      for (let i = 0; i < numNodes; i++) {
         figureEl = thumbElements[i]; // <figure> element
 
         // include only element nodes
@@ -208,7 +157,7 @@ class Demo1 {
           continue;
         }
 
-        linkEl = figureEl.children[0]; // <a> element
+        [linkEl] = figureEl.children; // <a> element
 
         size = linkEl.getAttribute("data-size").split("x");
 
@@ -237,7 +186,7 @@ class Demo1 {
     };
 
     // find nearest parent element
-    var closest = function closest(el, fn) {
+    const closest = function closest(el, fn) {
       return el && (fn(el) ? el : closest(el.parentNode, fn));
     };
 
@@ -246,10 +195,10 @@ class Demo1 {
       e = e || window.event;
       e.preventDefault ? e.preventDefault() : (e.returnValue = false);
 
-      var eTarget = e.target || e.srcElement;
+      const eTarget = e.target || e.srcElement;
 
       // find root element of slide
-      var clickedListItem = closest(eTarget, function(el) {
+      const clickedListItem = closest(eTarget, function(el) {
         return el.tagName && el.tagName.toUpperCase() === "FIGURE";
       });
 
@@ -286,19 +235,19 @@ class Demo1 {
 
     // parse picture index and gallery index from URL (#&pid=1&gid=2)
     const photoswipeParseHash = () => {
-      var hash = window.location.hash.substring(1),
-        params = {};
+      const hash = window.location.hash.substring(1);
+      const params = {};
 
       if (hash.length < 5) {
         return params;
       }
 
-      var vars = hash.split("&");
-      for (var i = 0; i < vars.length; i++) {
+      const vars = hash.split("&");
+      for (let i = 0; i < vars.length; i++) {
         if (!vars[i]) {
           continue;
         }
-        var pair = vars[i].split("=");
+        const pair = vars[i].split("=");
         if (pair.length < 2) {
           continue;
         }
@@ -312,25 +261,26 @@ class Demo1 {
       return params;
     };
 
-    var openPhotoSwipe = (index, galleryElement, disableAnimation, fromURL) => {
-      var pswpElement = document.querySelectorAll(".pswp")[0],
-        gallery,
-        options,
-        items;
-
-      items = parseThumbnailElements(galleryElement);
+    const openPhotoSwipe = (
+      index,
+      galleryElement,
+      disableAnimation,
+      fromURL
+    ) => {
+      const pswpElement = document.querySelectorAll(".pswp")[0];
+      const items = parseThumbnailElements(galleryElement);
 
       // define options (if needed)
-      options = {
+      const options = {
         // define gallery index (for URL)
         galleryUID: galleryElement.getAttribute("data-pswp-uid"),
 
-        getThumbBoundsFn: function(index) {
+        getThumbBoundsFn: ind => {
           // See Options -> getThumbBoundsFn section of documentation for more info
-          var thumbnail = items[index].el.getElementsByTagName("img")[0], // find thumbnail
-            pageYScroll =
-              window.pageYOffset || document.documentElement.scrollTop,
-            rect = thumbnail.getBoundingClientRect();
+          const thumbnail = items[index].el.getElementsByTagName("img")[0]; // find thumbnail
+          const pageYScroll =
+            window.pageYOffset || document.documentElement.scrollTop;
+          const rect = thumbnail.getBoundingClientRect();
 
           return { x: rect.left, y: rect.top + pageYScroll, w: rect.width };
         },
@@ -351,7 +301,7 @@ class Demo1 {
           "top-bar",
           "img"
         ],
-        getDoubleTapZoom: function(isMouseClick, item) {
+        getDoubleTapZoom: (isMouseClick, item) => {
           return item.initialZoomLevel;
         },
         pinchToClose: false
@@ -362,8 +312,8 @@ class Demo1 {
         if (options.galleryPIDs) {
           // parse real index when custom PIDs are used
           // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
-          for (var j = 0; j < items.length; j++) {
-            if (items[j].pid == index) {
+          for (let j = 0; j < items.length; j++) {
+            if (items[j].pid === index) {
               options.index = j;
               break;
             }
@@ -386,9 +336,9 @@ class Demo1 {
       }
 
       // Pass data to PhotoSwipe and initialize it
-      gallery = new PhotoSwipe(
+      const gallery = new PhotoSwipe(
         pswpElement,
-        PhotoSwipeUI_Default,
+        PhotoSwipeUIDefault,
         items,
         options
       );
@@ -409,14 +359,12 @@ class Demo1 {
           container.querySelectorAll(".pswp__img")
         ).pop();
 
-        // image.style.cursor = "none";
-
-        const mouseEnter = e => {
+        const mouseEnter = () => {
           this.cursorWrapper.classList.remove("is-outside");
         };
         image.addEventListener("mouseenter", mouseEnter, false);
 
-        const mouseLeave = e => {
+        const mouseLeave = () => {
           this.cursorWrapper.classList.add("is-outside");
         };
         image.addEventListener("mouseleave", mouseLeave, false);
@@ -432,15 +380,15 @@ class Demo1 {
     };
 
     // loop through all gallery elements and bind events
-    var galleryElements = document.querySelectorAll(gallerySelector);
+    const galleryElements = document.querySelectorAll(gallerySelector);
 
-    for (var i = 0, l = galleryElements.length; i < l; i++) {
-      galleryElements[i].setAttribute("data-pswp-uid", i + 1);
-      galleryElements[i].onclick = onThumbnailsClick;
-    }
+    galleryElements.forEach((el, i) => {
+      el.setAttribute("data-pswp-uid", i + 1);
+      el.onclick = onThumbnailsClick;
+    });
 
     // Parse URL and open gallery if it contains #&pid=3&gid=1
-    var hashData = photoswipeParseHash();
+    const hashData = photoswipeParseHash();
     if (hashData.pid && hashData.gid) {
       openPhotoSwipe(
         hashData.pid,
@@ -449,6 +397,18 @@ class Demo1 {
         true
       );
     }
+  }
+
+  scaleGrid() {
+    this.gridInner.style.transform = `scale(1)`;
+    const innerGridBox = this.gridInner.getBoundingClientRect();
+    const availableWidth = window.innerWidth - 70;
+    const availableHeight = window.innerHeight - 230;
+    const scale = Math.min(
+      availableWidth / innerGridBox.width,
+      availableHeight / innerGridBox.height
+    );
+    this.gridInner.style.transform = `scale(${scale})`;
   }
 }
 
