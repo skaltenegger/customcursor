@@ -1,5 +1,5 @@
+import TweenMax from "gsap/TweenMax";
 import initPageTransitions from "./initPageTransitions";
-import Util from "./utils/util";
 
 /**
  * demo.js
@@ -8,7 +8,7 @@ import Util from "./utils/util";
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  *
- * Copyright 2017, Codrops
+ * Copyright 2019, Codrops
  * http://www.codrops.com
  */
 
@@ -20,70 +20,59 @@ class Demo3 {
   }
 
   initCursor() {
-    this.outerCursor = document.querySelector(
-      ".demo-3-body .circle-cursor--outer"
-    );
-    this.innerCursor = document.querySelector(
-      ".demo-3-body .circle-cursor--inner"
-    );
+    const { Back } = window;
+    this.outerCursor = document.querySelector(".circle-cursor--outer");
+    this.innerCursor = document.querySelector(".circle-cursor--inner");
     this.outerCursorBox = this.outerCursor.getBoundingClientRect();
-    this.innerCursorBox = this.innerCursor.getBoundingClientRect();
-    this.outerCursorSpeed = 0.3;
+    this.outerCursorSpeed = 0;
     this.easing = Back.easeOut.config(1.7);
+    this.clientX = -100;
+    this.clientY = -100;
 
     document.addEventListener("mousemove", e => {
-      if (!this.innerCursor.classList.contains("is-visible")) {
-        this.setCursorPosition(e, [0, 0], () => {
-          TweenMax.set(this.innerCursor, {
-            opacity: 1,
-            onComplete: () => {
-              TweenMax.set(this.outerCursor, {
-                opacity: 0.2
-              });
-              this.innerCursor.classList.add("is-visible");
-            }
-          });
+      this.clientX = e.clientX;
+      this.clientY = e.clientY;
+    });
+
+    document.addEventListener("mouseenter", () => {
+      TweenMax.set(this.innerCursor, {
+        x: this.clientX,
+        y: this.clientY
+      });
+      TweenMax.set(this.outerCursor, {
+        x: this.clientX - this.outerCursorBox.width / 2,
+        y: this.clientY - this.outerCursorBox.height / 2
+      });
+      setTimeout(() => {
+        this.outerCursorSpeed = 0.2;
+      }, 100);
+    });
+
+    const render = () => {
+      TweenMax.set(this.innerCursor, {
+        x: this.clientX,
+        y: this.clientY
+      });
+      if (!this.isStuck) {
+        TweenMax.to(this.outerCursor, this.outerCursorSpeed, {
+          x: this.clientX - this.outerCursorBox.width / 2,
+          y: this.clientY - this.outerCursorBox.height / 2
         });
       }
-
-      this.setCursorPosition(e);
-    });
-  }
-
-  setCursorPosition(
-    e,
-    durations = [0, this.outerCursorSpeed],
-    complete = () => {}
-  ) {
-    const { clientX, clientY } = e;
-    const [innerDuration, outerDuration] = durations;
-    TweenMax.to(this.innerCursor, innerDuration, {
-      x: clientX - this.innerCursorBox.width / 2,
-      y: clientY - this.innerCursorBox.height / 2,
-      rotation: -45,
-      onComplete: complete()
-    });
-
-    if (!this.outerCursor.classList.contains("is-stuck")) {
-      TweenMax.to(this.outerCursor, outerDuration, {
-        x: clientX - this.outerCursorBox.width / 2,
-        y: clientY - this.outerCursorBox.height / 2,
-        onComplete: complete()
-      });
-    }
+      requestAnimationFrame(render);
+    };
+    requestAnimationFrame(render);
   }
 
   initHovers() {
     const handleMouseEnter = e => {
+      this.isStuck = true;
       const target = e.currentTarget;
       const box = target.getBoundingClientRect();
-      const x = box.left + box.width / 2;
-      const y = box.top + box.height / 2;
       this.outerCursorOriginals = {
         width: this.outerCursorBox.width,
         height: this.outerCursorBox.height
       };
-      this.outerCursor.classList.add("is-stuck");
       TweenMax.to(this.outerCursor, 0.2, {
         x: box.left,
         y: box.top,
@@ -94,8 +83,8 @@ class Demo3 {
       });
     };
 
-    const handleMouseLeave = e => {
-      this.outerCursor.classList.remove("is-stuck");
+    const handleMouseLeave = () => {
+      this.isStuck = false;
       TweenMax.to(this.outerCursor, 0.2, {
         width: this.outerCursorOriginals.width,
         height: this.outerCursorOriginals.height,
@@ -104,46 +93,37 @@ class Demo3 {
       });
     };
 
-    Util.addEventListenerBySelector(
-      ".grid__link--demo3",
-      "mouseenter",
-      handleMouseEnter
-    );
-    Util.addEventListenerBySelector(
-      ".grid__link--demo3",
-      "mouseleave",
-      handleMouseLeave
-    );
+    const linkItems = document.querySelectorAll(".grid__link--demo3");
+    linkItems.forEach(item => {
+      item.addEventListener("mouseenter", handleMouseEnter);
+      item.addEventListener("mouseleave", handleMouseLeave);
+    });
 
-    const codropsNavEnter = e => {
-      const fullSize = 40;
+    const mainNavHoverTween = TweenMax.to(this.outerCursor, 0.3, {
+      backgroundColor: "#ffffff",
+      ease: this.easing,
+      paused: true
+    });
+
+    const mainNavMouseEnter = () => {
       this.outerCursorSpeed = 0;
       TweenMax.set(this.innerCursor, { opacity: 0 });
-      TweenMax.to(this.outerCursor, 0.3, {
-        backgroundColor: "#ffffff",
-        ease: this.easing
-      });
+      mainNavHoverTween.play();
     };
 
-    const codropsNavLeave = e => {
-      this.outerCursorSpeed = 0.3;
+    const mainNavMouseLeave = () => {
+      this.outerCursorSpeed = 0.2;
       TweenMax.set(this.innerCursor, { opacity: 1 });
-      TweenMax.to(this.outerCursor, 0.3, {
-        backgroundColor: "transparent",
-        ease: this.easing
-      });
+      mainNavHoverTween.reverse();
     };
 
-    Util.addEventListenerBySelector(
-      ".demo-3-body .content--fixed a",
-      "mouseenter",
-      codropsNavEnter
+    const mainNavLinks = document.querySelectorAll(
+      ".demo-3-body .content--fixed a"
     );
-    Util.addEventListenerBySelector(
-      ".demo-3-body .content--fixed a",
-      "mouseleave",
-      codropsNavLeave
-    );
+    mainNavLinks.forEach(item => {
+      item.addEventListener("mouseenter", mainNavMouseEnter);
+      item.addEventListener("mouseleave", mainNavMouseLeave);
+    });
   }
 }
 

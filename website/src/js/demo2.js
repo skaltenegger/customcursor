@@ -1,5 +1,5 @@
+import TweenMax from "gsap/TweenMax";
 import initPageTransitions from "./initPageTransitions";
-import Util from "./utils/util";
 
 /**
  * demo.js
@@ -21,16 +21,15 @@ class Demo2 {
   }
 
   initDemo() {
+    const { Back } = window;
     this.cursor = document.querySelector(".arrow-cursor");
     this.cursorIcon = document.querySelector(".arrow-cursor__icon");
     this.cursorBox = this.cursor.getBoundingClientRect();
-    this.swiperBox = document
-      .querySelector(".swiper-container")
-      .getBoundingClientRect();
-
     this.easing = Back.easeOut.config(1.7);
     this.animationDuration = 0.3;
+    this.cursorSide = null; // will be null, "left" or "right"
 
+    // initial cursor styling
     TweenMax.to(this.cursorIcon, 0, {
       rotation: -135,
       opacity: 0,
@@ -38,134 +37,92 @@ class Demo2 {
     });
 
     document.addEventListener("mousemove", e => {
-      this.updateCursorPosition(e);
+      this.clientX = e.clientX;
+      this.clientY = e.clientY;
     });
 
-    // mouseEnter
-    const handleMouseMove = e => {
-      const { clientX, clientY } = e;
-      let beforeRotation;
-      if (clientY < window.innerHeight / 2) {
-        beforeRotation = -135;
-      } else {
-        beforeRotation = clientX > window.innerWidth / 2 ? 135 : -315;
-      }
-      if (!this.cursor.classList.contains("is-visible")) {
-        this.cursor.classList.add("is-visible");
-        TweenMax.to(this.cursorIcon, 0, {
-          rotation: beforeRotation,
-          opacity: 0,
-          onComplete: () => {
-            if (clientX > window.innerWidth / 2) {
-              this.cursor.classList.add("is-right");
-              TweenMax.to(this.cursorIcon, this.animationDuration, {
-                rotation: 0,
-                scale: 1,
-                opacity: 1,
-                ease: this.easing
-              });
-            } else {
-              this.cursor.classList.add("is-left");
-              TweenMax.to(this.cursorIcon, this.animationDuration, {
-                rotation: -180,
-                scale: 1,
-                opacity: 1,
-                ease: this.easing
-              });
-            }
-          }
-        });
-      }
+    const render = () => {
+      TweenMax.set(this.cursor, {
+        x: this.clientX,
+        y: this.clientY
+      });
+      requestAnimationFrame(render);
     };
+    requestAnimationFrame(render);
 
-    // mouseLeave
-    const handleMouseLeave = e => {
-      const { clientX, clientY } = e;
-      let rotation = 0;
-      if (clientY < window.innerHeight / 2) {
-        rotation = this.cursor.classList.contains("is-right") ? -135 : -45;
+    // mouseenter
+    const onSwiperMouseEnter = e => {
+      this.swiperBox = e.target.getBoundingClientRect();
+
+      let startRotation;
+      if (this.clientY < this.swiperBox.top + this.swiperBox.height / 2) {
+        startRotation = -135;
       } else {
-        rotation = this.cursor.classList.contains("is-right") ? 135 : -315;
+        startRotation = this.clientX > window.innerWidth / 2 ? 135 : -315;
       }
+      TweenMax.set(this.cursorIcon, {
+        rotation: startRotation
+      });
+
+      this.cursorSide = this.clientX > window.innerWidth / 2 ? "right" : "left";
+
       TweenMax.to(this.cursorIcon, this.animationDuration, {
-        rotation: rotation,
-        opacity: 0,
-        scale: 0.3,
-        onComplete: () => {
-          this.cursor.classList.remove("is-left");
-          this.cursor.classList.remove("is-right");
-          this.cursor.classList.remove("is-visible");
-        }
+        rotation: this.cursorSide === "right" ? 0 : -180,
+        scale: 1,
+        opacity: 1,
+        ease: this.easing
       });
     };
 
-    // move to the left
-    const handleMoveToPrev = e => {
-      const { clientX, clientY } = e;
+    // mouseLeave
+    const onMouseLeave = e => {
+      this.swiperBox = e.target.getBoundingClientRect();
+
+      let outRotation = 0;
+      if (this.clientY < this.swiperBox.top + this.swiperBox.height / 2) {
+        outRotation = this.cursorSide === "right" ? -135 : -45;
+      } else {
+        outRotation = this.cursorSide === "right" ? 135 : -315;
+      }
+
+      TweenMax.to(this.cursorIcon, this.animationDuration, {
+        rotation: outRotation,
+        opacity: 0,
+        scale: 0.3
+      });
+
+      this.cursorSide = null;
+    };
+
+    // move cursor from left to right or right to left inside the Swiper
+    const onSwitchSwiperSides = e => {
+      const swiperControlBox = e.target.getBoundingClientRect();
+
       if (
-        clientX < window.innerWidth / 2 &&
-        clientY > this.swiperBox.top &&
-        this.cursor.classList.contains("is-right") &&
-        !this.cursor.classList.contains("is-left")
+        this.clientY > swiperControlBox.top &&
+        this.clientY < swiperControlBox.bottom
       ) {
-        this.cursor.classList.add("is-left");
-        this.cursor.classList.remove("is-right");
         TweenMax.to(this.cursorIcon, this.animationDuration, {
-          rotation: -180,
+          rotation: this.cursorSide === "right" ? -180 : 0,
           ease: this.easing
         });
+
+        this.cursorSide = this.cursorSide === "left" ? "right" : "left";
       }
     };
 
-    // move to the right
-    const handleMoveToNext = e => {
-      const { clientX, clientY } = e;
-      if (
-        clientX > window.innerWidth / 2 &&
-        clientY > this.swiperBox.top &&
-        this.cursor.classList.contains("is-left") &&
-        !this.cursor.classList.contains("is-right")
-      ) {
-        this.cursor.classList.add("is-right");
-        this.cursor.classList.remove("is-left");
-        TweenMax.to(this.cursorIcon, this.animationDuration, {
-          rotation: 0,
-          ease: this.easing
-        });
-      }
-    };
+    const SwiperContainer = document.querySelector(".swiper-container");
+    SwiperContainer.addEventListener("mouseenter", onSwiperMouseEnter);
+    SwiperContainer.addEventListener("mouseleave", onMouseLeave);
 
-    Util.addEventListenerBySelector(
-      ".swiper-container",
-      "mousemove",
-      handleMouseMove
-    );
-    Util.addEventListenerBySelector(
-      ".swiper-container",
-      "mouseleave",
-      handleMouseLeave
-    );
-    Util.addEventListenerBySelector(
-      ".swiper-button-prev",
-      "mousemove",
-      handleMoveToPrev
-    );
-    Util.addEventListenerBySelector(
-      ".swiper-button-next",
-      "mousemove",
-      handleMoveToNext
-    );
-  }
-
-  updateCursorPosition(e) {
-    const { clientX, clientY } = e;
-    TweenMax.to(this.cursor, 0, {
-      x: clientX - this.cursorBox.width / 2,
-      y: clientY - this.cursorBox.height / 2
-    });
+    const swiperButtonPrev = document.querySelector(".swiper-button-prev");
+    const swiperButtonNext = document.querySelector(".swiper-button-next");
+    swiperButtonPrev.addEventListener("mouseenter", onSwitchSwiperSides);
+    swiperButtonNext.addEventListener("mouseenter", onSwitchSwiperSides);
   }
 
   initSwiper() {
+    const { Swiper } = window;
     this.swiper = new Swiper(".swiper-container", {
       loop: true,
       slidesPerView: "auto",
@@ -178,49 +135,30 @@ class Demo2 {
     });
     this.swiper.on("touchMove", e => {
       const { clientX, clientY } = e;
-      this.updateCursorPosition(e);
+      this.clientX = clientX;
+      this.clientY = clientY;
 
-      if (
-        clientX < window.innerWidth / 2 &&
-        this.cursor.classList.contains("is-right") &&
-        !this.cursor.classList.contains("is-left")
-      ) {
-        this.cursor.classList.add("is-left");
-        this.cursor.classList.remove("is-right");
-        TweenMax.to(this.cursorIcon, this.animationDuration, {
-          rotation: -180,
-          ease: this.easing
-        });
-      }
+      this.cursorSide = this.clientX > window.innerWidth / 2 ? "right" : "left";
 
-      if (
-        clientX > window.innerWidth / 2 &&
-        this.cursor.classList.contains("is-left") &&
-        !this.cursor.classList.contains("is-right")
-      ) {
-        this.cursor.classList.add("is-right");
-        this.cursor.classList.remove("is-left");
-        TweenMax.to(this.cursorIcon, this.animationDuration, {
-          rotation: 0,
-          ease: this.easing
-        });
-      }
+      TweenMax.to(this.cursorIcon, this.animationDuration, {
+        rotation: this.cursorSide === "right" ? 0 : -180,
+        ease: this.easing
+      });
     });
 
-    this.swiper.on("slideChange", e => {
-      this.scaleCursor();
-    });
-  }
-
-  scaleCursor() {
-    TweenMax.to(this.cursor, 0.1, {
+    this.bumpCursorTween = TweenMax.to(this.cursor, 0.1, {
       scale: 0.85,
       onComplete: () => {
         TweenMax.to(this.cursor, 0.2, {
           scale: 1,
           ease: this.easing
         });
-      }
+      },
+      paused: true
+    });
+
+    this.swiper.on("slideChange", () => {
+      this.bumpCursorTween.play();
     });
   }
 }

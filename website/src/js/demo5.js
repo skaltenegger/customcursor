@@ -52,12 +52,6 @@ class Demo5 {
           y: this.clientY - this.cursorBox.height / 2
         });
       }
-      // else {
-      //   TweenMax.set(this.cursor, {
-      //     x: this.stuckX - this.cursorOriginals.width / 2,
-      //     y: this.stuckY - this.cursorOriginals.height / 2
-      //   });
-      // }
 
       requestAnimationFrame(render);
     };

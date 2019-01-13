@@ -93,7 +93,7 @@ class Demo1 {
     const pswpContainer = document.querySelector(".pswp__container");
     pswpContainer.addEventListener("mouseenter", handleMouseEnter);
 
-    const mainNavItems = document.querySelectorAll(".demo-1 .content--fixed a");
+    const mainNavItems = document.querySelectorAll(".content--fixed a");
     mainNavItems.forEach(el => {
       el.addEventListener("mouseenter", () => {
         this.mainNavHoverTween.play();
