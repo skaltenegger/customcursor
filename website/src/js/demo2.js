@@ -54,6 +54,9 @@ class Demo2 {
     const onSwiperMouseEnter = e => {
       this.swiperBox = e.target.getBoundingClientRect();
 
+      if (!this.clientX) this.clientX = e.clientX;
+      if (!this.clientY) this.clientY = e.clientX;
+
       let startRotation;
       if (this.clientY < this.swiperBox.top + this.swiperBox.height / 2) {
         startRotation = -135;
@@ -97,10 +100,10 @@ class Demo2 {
     // move cursor from left to right or right to left inside the Swiper
     const onSwitchSwiperSides = e => {
       const swiperControlBox = e.target.getBoundingClientRect();
-
       if (
         this.clientY > swiperControlBox.top &&
-        this.clientY < swiperControlBox.bottom
+        this.clientY < swiperControlBox.bottom &&
+        this.cursorSide
       ) {
         TweenMax.to(this.cursorIcon, this.animationDuration, {
           rotation: this.cursorSide === "right" ? -180 : 0,
