@@ -1,29 +1,24 @@
 .demo-4 {
   --color-text: #fff;
   --color-bg: #171717;
+  --color-line: #292929;
   --color-link: #ff0000;
   --color-link-hover: #ff0000;
   --color-info: #ff0000;
-  --canvas-size: 200vw;
   &,
   a {
     cursor: none;
   }
-}
 
-.demo-4 {
   .circle-cursor {
     position: fixed;
     left: 0;
     top: 0;
     pointer-events: none;
-    opacity: 1;
     &--outer {
       width: 100vw;
       height: 100vh;
       z-index: 12000;
-      border-radius: 0;
-      border: 0;
     }
     &--inner {
       width: 5px;
@@ -36,32 +31,20 @@
     }
   }
 
-  .content--demo3 {
-    .grid {
-      &__inner {
-        justify-content: center;
-      }
-      &__link {
-        display: flex;
-        width: 76px;
-        height: 76px;
-        justify-content: center;
-        align-items: center;
-        svg {
-          width: 30px;
-          height: 30px;
-          path {
-            fill: var(--color-text);
-            transition: all 0.2s ease 0s;
-          }
-        }
-        &:hover {
-          svg path {
-            fill: var(--color-link);
-            transition: all 0.2s ease 0.05s;
-          }
-        }
-      }
+  .grid {
+    position: absolute;
+    padding: calc(1.5em + 42px + 1.5em) 1.5em;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__inner {
+      justify-content: center;
+      display: flex;
+      width: 100%;
     }
   }
+
+  @import "_browser-window.scss";
 }

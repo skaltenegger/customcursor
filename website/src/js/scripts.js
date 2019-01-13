@@ -12,7 +12,7 @@ if (document.querySelector(".demo-2")) {
   const demo2 = new Demo2();
 }
 
-if (document.querySelector(".demo-3-body")) {
+if (document.querySelector(".demo-3")) {
   const demo3 = new Demo3();
 }
 

@@ -93,7 +93,7 @@ class Demo3 {
       });
     };
 
-    const linkItems = document.querySelectorAll(".grid__link--demo3");
+    const linkItems = document.querySelectorAll(".browser-window__link");
     linkItems.forEach(item => {
       item.addEventListener("mouseenter", handleMouseEnter);
       item.addEventListener("mouseleave", handleMouseLeave);
@@ -117,9 +117,7 @@ class Demo3 {
       mainNavHoverTween.reverse();
     };
 
-    const mainNavLinks = document.querySelectorAll(
-      ".demo-3-body .content--fixed a"
-    );
+    const mainNavLinks = document.querySelectorAll(".content--fixed a");
     mainNavLinks.forEach(item => {
       item.addEventListener("mouseenter", mainNavMouseEnter);
       item.addEventListener("mouseleave", mainNavMouseLeave);

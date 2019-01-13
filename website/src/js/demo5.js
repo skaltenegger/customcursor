@@ -20,17 +20,20 @@ class Demo5 {
   }
 
   initCursor() {
+    const { Back } = window;
     this.cursor = document.querySelector(".square-cursor");
     this.cursorInner = document.querySelector(".square-cursor__inner");
     this.cursorObjectBox = this.cursorInner.getBoundingClientRect();
     this.cursorBox = this.cursor.getBoundingClientRect();
     this.easing = Back.easeOut.config(1.7);
     this.cursorIsStuck = false;
+    this.clientX = -100;
+    this.clientY = -100;
 
     this.nav = document.querySelector(".nav");
     this.navBox = this.nav.getBoundingClientRect();
 
-    document.addEventListener("mouseenter", e => {
+    document.addEventListener("mouseenter", () => {
       TweenMax.set(this.cursorInner, {
         rotation: -45
       });
@@ -52,7 +55,6 @@ class Demo5 {
           y: this.clientY - this.cursorBox.height / 2
         });
       }
-
       requestAnimationFrame(render);
     };
     requestAnimationFrame(render);

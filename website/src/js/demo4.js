@@ -25,7 +25,7 @@ class Demo4 {
     this.clientX = -100;
     this.clientY = -100;
 
-    this.innerCursor = document.querySelector(".demo-4 .circle-cursor--inner");
+    this.innerCursor = document.querySelector(".circle-cursor--inner");
     this.outerCursorSpeed = 1;
     this.lastX = 0;
     this.lastY = 0;
@@ -169,7 +169,7 @@ class Demo4 {
       this.isStuck = false;
     };
 
-    const linkItems = document.querySelectorAll(".demo-4 .grid__link");
+    const linkItems = document.querySelectorAll(".browser-window__link");
     linkItems.forEach(item => {
       item.addEventListener("mouseenter", handleMouseEnter);
       item.addEventListener("mouseleave", handleMouseLeave);
@@ -186,7 +186,7 @@ class Demo4 {
       TweenMax.to(this.innerCursor, 0.2, { opacity: 1 });
     };
 
-    const mainNavItems = document.querySelectorAll(".demo-4 .content--fixed a");
+    const mainNavItems = document.querySelectorAll(".content--fixed a");
     mainNavItems.forEach(item => {
       item.addEventListener("mouseenter", mainNavItemMouseEnter);
       item.addEventListener("mouseleave", mainNavItemMouseLeave);

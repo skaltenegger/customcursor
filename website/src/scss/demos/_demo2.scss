@@ -5,80 +5,96 @@
   --color-link-hover: #000000;
   --color-info: #000000;
   --swiper-height: 65vh;
-}
 
-.content--demo2 {
   .grid {
-    padding-right: 0;
-    padding-left: 0;
-  }
-}
-
-.swiper-container {
-  width: 100%;
-  height: var(--swiper-height);
-  .swiper-wrapper {
-    width: 100%;
-  }
-  .swiper-slide {
-    width: auto;
-    background-color: #eaeaea;
-    display: flex;
-    &__img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    position: relative;
-    width: 0;
-    padding-left: calc(var(--swiper-height) / 2 * 3);
-    &--square {
-      padding-left: var(--swiper-height);
-    }
-    &--portrait {
-      padding-left: calc(var(--swiper-height) / 3 * 2);
-    }
-  }
-}
-
-.swiper-button-prev,
-.swiper-button-next {
-  width: 50%;
-  height: 100%;
-  margin-top: 0;
-  top: 0;
-  background-image: none;
-  cursor: none;
-}
-
-.swiper-button-prev {
-  left: 0;
-}
-
-.swiper-button-next {
-  right: 0;
-}
-
-.arrow-cursor {
-  width: 150px;
-  height: 110px;
-  position: fixed;
-  left: -75px;
-  top: -55px;
-  z-index: 10000000;
-  pointer-events: none;
-  &__icon {
     position: absolute;
-    left: 0;
-    top: 0;
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      &.lazyloaded {
+        opacity: 1;
+      }
+    }
   }
-  &__path {
-    fill: none;
-    stroke: #000;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.5px;
+
+  .swiper-container {
+    width: 100%;
+    height: var(--swiper-height);
+    overflow: hidden;
+    .swiper-wrapper {
+      width: 100%;
+    }
+    .swiper-slide {
+      width: auto;
+      background-color: #eaeaea;
+      display: flex;
+      &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      position: relative;
+      width: 0;
+      padding-left: calc(var(--swiper-height) / 2 * 3);
+      &--square {
+        padding-left: var(--swiper-height);
+      }
+      &--portrait {
+        padding-left: calc(var(--swiper-height) / 3 * 2);
+      }
+    }
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    width: 50%;
+    height: 100%;
+    margin-top: 0;
+    top: 0;
+    background-image: none;
+    cursor: none;
+  }
+
+  .swiper-button-prev {
+    left: 0;
+  }
+
+  .swiper-button-next {
+    right: 0;
+  }
+
+  .arrow-cursor {
+    width: 150px;
+    height: 110px;
+    position: fixed;
+    left: -75px;
+    top: -55px;
+    z-index: 10000000;
+    pointer-events: none;
+    &__icon {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+    &__path {
+      fill: none;
+      stroke: #000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.5px;
+    }
   }
 }

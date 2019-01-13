@@ -5,8 +5,8 @@
   --color-link: #2edf16;
   --color-link-hover: #2edf16;
   --color-info: #2edf16;
-  --image-height: 55vh;
 
+  --image-height: 55vh;
   --cursor-width: 22px;
   --link-width: 35px;
 
@@ -14,30 +14,42 @@
   a {
     cursor: none;
   }
-}
 
-.square-cursor {
-  position: fixed;
-  left: 0;
-  top: 0;
-  pointer-events: none;
-  opacity: 1;
-  z-index: 5000;
-  width: 100px;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &__inner {
-    width: var(--cursor-width);
-    height: var(--cursor-width);
-    border: 1px solid var(--color-link);
-    z-index: 5000;
+  .grid {
+    img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
   }
-}
 
-.demo-5 {
+  .square-cursor {
+    position: fixed;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    opacity: 1;
+    z-index: 5000;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &__inner {
+      width: var(--cursor-width);
+      height: var(--cursor-width);
+      border: 1px solid var(--color-link);
+      z-index: 5000;
+    }
+  }
+
   .grid__inner {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     .image-wrapper {
       width: 100%;
@@ -62,6 +74,7 @@
     }
     .nav {
       display: flex;
+      width: auto;
       &__link {
         display: inline-flex;
         width: var(--link-width);
