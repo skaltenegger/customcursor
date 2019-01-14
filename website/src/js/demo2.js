@@ -78,7 +78,7 @@ class Demo2 {
     };
 
     // mouseLeave
-    const onMouseLeave = e => {
+    const onSwiperMouseLeave = e => {
       this.swiperBox = e.target.getBoundingClientRect();
 
       let outRotation = 0;
@@ -103,7 +103,7 @@ class Demo2 {
       if (
         this.clientY > swiperControlBox.top &&
         this.clientY < swiperControlBox.bottom &&
-        this.cursorSide
+        e.relatedTarget
       ) {
         TweenMax.to(this.cursorIcon, this.animationDuration, {
           rotation: this.cursorSide === "right" ? -180 : 0,
@@ -116,7 +116,7 @@ class Demo2 {
 
     const SwiperContainer = document.querySelector(".swiper-container");
     SwiperContainer.addEventListener("mouseenter", onSwiperMouseEnter);
-    SwiperContainer.addEventListener("mouseleave", onMouseLeave);
+    SwiperContainer.addEventListener("mouseleave", onSwiperMouseLeave);
 
     const swiperButtonPrev = document.querySelector(".swiper-button-prev");
     const swiperButtonNext = document.querySelector(".swiper-button-next");
