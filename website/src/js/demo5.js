@@ -29,19 +29,15 @@ class Demo5 {
     this.cursorIsStuck = false;
     this.clientX = -100;
     this.clientY = -100;
+    this.showCursor = false;
 
     this.nav = document.querySelector(".nav");
     this.navBox = this.nav.getBoundingClientRect();
 
-    document.addEventListener("mouseenter", () => {
-      TweenMax.set(this.cursorInner, {
-        rotation: -45
-      });
-      this.cursorOriginals = {
-        width: this.cursorObjectBox.width,
-        height: this.cursorObjectBox.height
-      };
-    });
+    this.cursorOriginals = {
+      width: this.cursorInner.offsetWidth,
+      height: this.cursorInner.offsetHeight
+    };
 
     document.addEventListener("mousemove", e => {
       this.clientX = e.clientX;

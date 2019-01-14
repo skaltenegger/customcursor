@@ -28,13 +28,9 @@ class Demo3 {
     this.easing = Back.easeOut.config(1.7);
     this.clientX = -100;
     this.clientY = -100;
+    this.showCursor = false;
 
-    document.addEventListener("mousemove", e => {
-      this.clientX = e.clientX;
-      this.clientY = e.clientY;
-    });
-
-    document.addEventListener("mouseenter", () => {
+    const unveilCursor = () => {
       TweenMax.set(this.innerCursor, {
         x: this.clientX,
         y: this.clientY
@@ -46,6 +42,13 @@ class Demo3 {
       setTimeout(() => {
         this.outerCursorSpeed = 0.2;
       }, 100);
+      this.showCursor = true;
+    };
+    document.addEventListener("mousemove", unveilCursor);
+
+    document.addEventListener("mousemove", e => {
+      this.clientX = e.clientX;
+      this.clientY = e.clientY;
     });
 
     const render = () => {
@@ -58,6 +61,9 @@ class Demo3 {
           x: this.clientX - this.outerCursorBox.width / 2,
           y: this.clientY - this.outerCursorBox.height / 2
         });
+      }
+      if (this.showCursor) {
+        document.removeEventListener("mousemove", unveilCursor);
       }
       requestAnimationFrame(render);
     };

@@ -44,6 +44,7 @@
       height: var(--cursor-width);
       border: 1px solid var(--color-link);
       z-index: 5000;
+      transform: rotate(-45deg);
     }
   }
 

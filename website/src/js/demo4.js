@@ -24,20 +24,22 @@ class Demo4 {
   initCursor() {
     this.clientX = -100;
     this.clientY = -100;
-
     this.innerCursor = document.querySelector(".circle-cursor--inner");
     this.outerCursorSpeed = 1;
     this.lastX = 0;
     this.lastY = 0;
     this.isStuck = false;
+    this.showCursor = false;
     const { paper } = window;
 
-    document.addEventListener("mouseenter", e => {
+    const unveilCursor = e => {
       this.group.position = new paper.Point(e.clientX, e.clientY);
       setTimeout(() => {
         this.outerCursorSpeed = 0.2;
       }, 100);
-    });
+      this.showCursor = true;
+    };
+    document.addEventListener("mousemove", unveilCursor);
 
     document.addEventListener("mousemove", e => {
       this.clientX = e.clientX;
@@ -49,6 +51,9 @@ class Demo4 {
         x: this.clientX,
         y: this.clientY
       });
+      if (this.showCursor) {
+        document.removeEventListener("mousemove", unveilCursor);
+      }
       requestAnimationFrame(render);
     };
     requestAnimationFrame(render);
