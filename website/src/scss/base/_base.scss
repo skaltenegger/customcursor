@@ -304,12 +304,15 @@ main {
   padding: 1.5em;
   pointer-events: none;
   grid-template-columns: 50% 50%;
-  // grid-template-rows: auto calc(100vh - 4em - 100px) 4em;
   grid-template-rows: auto auto 4em;
   grid-template-areas:
     "header ..."
     "example ..."
     "github demos";
+
+  @media (max-width: 768px) {
+    // grid-template-columns: auto auto;
+  }
 }
 
 .content--fixed a {
@@ -334,6 +337,9 @@ main {
   font-weight: bold;
   margin: 0;
   padding: 0.75em 0;
+  @media (max-width: 768px) {
+    margin-right: 15px;
+  }
 }
 
 .info {
@@ -358,10 +364,16 @@ main {
 
 .demos__links {
   display: flex;
+  flex-wrap: wrap;
   position: fixed;
   left: 50%;
   bottom: 1.5em;
   transform: translateX(-50%);
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: calc(100vw - 5em - 48px);
+    justify-content: center;
+  }
 }
 
 .demo {
@@ -438,7 +450,11 @@ a.demo--current {
 // show message on mobile
 @media (pointer: coarse) {
   .message {
-    display: block;
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
   .demo-2 .message {
     background: none;
@@ -446,7 +462,8 @@ a.demo--current {
   .cursor-wrapper,
   .arrow-cursor,
   .circle-cursor,
-  .square-cursor {
+  .square-cursor,
+  .demos {
     display: none !important;
   }
 }

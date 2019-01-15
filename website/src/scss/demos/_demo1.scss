@@ -154,6 +154,6 @@
 // hide demo content on mobile
 @media (pointer: coarse) {
   .grid {
-    display: none;
+    display: none !important;
   }
 }
