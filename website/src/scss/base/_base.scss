@@ -255,12 +255,11 @@ a:focus {
   position: relative;
   z-index: 100;
   display: none;
-  padding: 1em;
   text-align: center;
   line-height: 1.4;
   background: var(--color-bg);
   color: var(--color-link);
-  padding: 2em 1em 1em;
+  padding: 2em 2em 1em;
 }
 
 /* Icons */
@@ -311,7 +310,7 @@ main {
     "github demos";
 
   @media (max-width: 768px) {
-    // grid-template-columns: auto auto;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -451,7 +450,8 @@ a.demo--current {
 @media (pointer: coarse) {
   .message {
     display: flex;
-    height: 100vh;
+    height: 95vh;
+    width: 100%;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -472,13 +472,8 @@ a.demo--current {
 @media (pointer: coarse) AND (min-width: 55em) {
   .message {
     position: absolute;
-    width: 100%;
     left: 0;
     top: 0;
     padding: 0;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }

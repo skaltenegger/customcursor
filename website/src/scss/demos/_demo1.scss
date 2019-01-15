@@ -153,7 +153,11 @@
 
 // hide demo content on mobile
 @media (pointer: coarse) {
-  .grid {
+  .content--demo1,
+  .content--demo2,
+  .content--demo3,
+  .content--demo4,
+  .content--demo5 {
     display: none !important;
   }
 }
