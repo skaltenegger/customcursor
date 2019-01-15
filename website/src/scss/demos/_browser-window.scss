@@ -1,31 +1,14 @@
 .browser-window {
   width: calc(100% - 100px);
   max-width: 960px;
-  height: 350px;
-  border: 1px solid var(--color-line);
-  border-radius: 10px 10px 0 0;
   position: relative;
-  &:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 104%;
-    height: 150px;
-    background: red;
-    display: block;
-    transform: translateX(-2%);
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0%,
-      var(--color-bg) 50%,
-      var(--color-bg) 100%
-    );
-  }
   &__bar {
     height: 25px;
     display: flex;
     align-items: center;
+    border: 1px solid var(--color-line);
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
     .dot {
       width: 11px;
       height: 11px;
@@ -38,10 +21,19 @@
     }
   }
   &__content {
-    border-top: 1px solid var(--color-line);
+    border: 1px solid var(--color-line);
     display: flex;
+    height: 300px;
     justify-content: space-between;
     padding: 20px;
+    position: relative;
+    border-image: linear-gradient(
+      to bottom,
+      var(--color-line) 0%,
+      var(--color-line) 50%,
+      var(--color-bg) 100%
+    );
+    border-image-slice: 1;
     &-right {
       display: flex;
       .browser-window__link {

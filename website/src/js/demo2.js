@@ -27,7 +27,8 @@ class Demo2 {
     this.cursorBox = this.cursor.getBoundingClientRect();
     this.easing = Back.easeOut.config(1.7);
     this.animationDuration = 0.3;
-    this.cursorSide = null; // will be null, "left" or "right"
+    this.cursorSide = null; // will be "left" or "right"
+    this.cursorInsideSwiper = false;
 
     // initial cursor styling
     TweenMax.to(this.cursorIcon, 0, {
@@ -55,7 +56,7 @@ class Demo2 {
       this.swiperBox = e.target.getBoundingClientRect();
 
       if (!this.clientX) this.clientX = e.clientX;
-      if (!this.clientY) this.clientY = e.clientX;
+      if (!this.clientY) this.clientY = e.clientY;
 
       let startRotation;
       if (this.clientY < this.swiperBox.top + this.swiperBox.height / 2) {
@@ -95,28 +96,27 @@ class Demo2 {
       });
 
       this.cursorSide = null;
+      this.cursorInsideSwiper = false;
     };
 
     // move cursor from left to right or right to left inside the Swiper
-    const onSwitchSwiperSides = e => {
-      const swiperControlBox = e.target.getBoundingClientRect();
-      if (
-        this.clientY > swiperControlBox.top &&
-        this.clientY < swiperControlBox.bottom &&
-        e.relatedTarget
-      ) {
+    const onSwitchSwiperSides = () => {
+      if (this.cursorInsideSwiper) {
         TweenMax.to(this.cursorIcon, this.animationDuration, {
           rotation: this.cursorSide === "right" ? -180 : 0,
           ease: this.easing
         });
-
         this.cursorSide = this.cursorSide === "left" ? "right" : "left";
+      }
+
+      if (!this.cursorInsideSwiper) {
+        this.cursorInsideSwiper = true;
       }
     };
 
-    const SwiperContainer = document.querySelector(".swiper-container");
-    SwiperContainer.addEventListener("mouseenter", onSwiperMouseEnter);
-    SwiperContainer.addEventListener("mouseleave", onSwiperMouseLeave);
+    const swiperContainer = document.querySelector(".swiper-container");
+    swiperContainer.addEventListener("mouseenter", onSwiperMouseEnter);
+    swiperContainer.addEventListener("mouseleave", onSwiperMouseLeave);
 
     const swiperButtonPrev = document.querySelector(".swiper-button-prev");
     const swiperButtonNext = document.querySelector(".swiper-button-next");

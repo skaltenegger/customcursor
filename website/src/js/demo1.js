@@ -157,7 +157,7 @@ class Demo1 {
           continue;
         }
 
-        [linkEl] = figureEl.children; // <a> element
+        linkEl = figureEl.children[0]; // <a> element
 
         size = linkEl.getAttribute("data-size").split("x");
 
