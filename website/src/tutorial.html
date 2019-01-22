@@ -1,65 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Custom Cursors | Tutorial | Codrops</title>
-  <meta name="description" content="" />
-  <meta name="keywords" content="" />
-  <meta name="author" content="Codrops" />
-  <link rel="shortcut icon" href="favicon.ico">
-  <script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()|| console.log("Please view this demo in a modern browser that supports CSS Variables.");</script>
-  <!--script src="//tympanus.net/codrops/adpacks/analytics.js"></script-->
-	<link rel="stylesheet" href="./css/styles.css">
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Custom Cursors | Tutorial | Codrops</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="Codrops" />
+    <link rel="shortcut icon" href="favicon.ico">
+    <script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()|| console.log("Please view this demo in a modern browser that supports CSS Variables.");</script>
+    <!--script src="//tympanus.net/codrops/adpacks/analytics.js"></script-->
+    <link rel="stylesheet" href="./css/styles.css">
+  </head>
 
-<body class="tutorial">
-  <main class="page">
-    <div class="page__inner">
-      <div class="cursor cursor--small"></div>
-      <canvas class="cursor cursor--canvas" resize></canvas>
+  <body class="tutorial">
+    <main class="page">
+      <div class="page__inner">
+        <div class="cursor cursor--small"></div>
+        <canvas class="cursor cursor--canvas" resize></canvas>
 
-      <nav class="nav">
-        <a href="#" class="link">
-          <svg class="settings-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-            <g class="settings-icon__group settings-icon__group--1">
-              <line class="settings-icon__line" x1="79.69" y1="16.2" x2="79.69" y2="83.8"/>
-              <rect class="settings-icon__rect" x="73.59" y="31.88" width="12.19" height="12.19"/>
-            </g>
-            <g class="settings-icon__group settings-icon__group--2">
-              <line class="settings-icon__line" x1="50.41" y1="16.2" x2="50.41" y2="83.8"/>
-              <rect class="settings-icon__rect" x="44.31" y="54.33" width="12.19" height="12.19"/>
-            </g>
-            <g class="settings-icon__group settings-icon__group--3">
-              <line class="settings-icon__line" x1="20.31" y1="16.2" x2="20.31" y2="83.8"/>
-              <rect class="settings-icon__rect" x="14.22" y="26.97" width="12.19" height="12.19"/>
-            </g>
-          </svg>
-        </a>
-        <!-- you can add more links here -->
-      </nav>
-    </div>
-	</main>
+        <nav class="nav">
+          <a href="#" class="link">
+            <svg class="settings-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+              <g class="settings-icon__group settings-icon__group--1">
+                <line class="settings-icon__line" x1="79.69" y1="16.2" x2="79.69" y2="83.8"/>
+                <rect class="settings-icon__rect" x="73.59" y="31.88" width="12.19" height="12.19"/>
+              </g>
+              <g class="settings-icon__group settings-icon__group--2">
+                <line class="settings-icon__line" x1="50.41" y1="16.2" x2="50.41" y2="83.8"/>
+                <rect class="settings-icon__rect" x="44.31" y="54.33" width="12.19" height="12.19"/>
+              </g>
+              <g class="settings-icon__group settings-icon__group--3">
+                <line class="settings-icon__line" x1="20.31" y1="16.2" x2="20.31" y2="83.8"/>
+                <rect class="settings-icon__rect" x="14.22" y="26.97" width="12.19" height="12.19"/>
+              </g>
+            </svg>
+          </a>
+          <!-- you can add more links here -->
+        </nav>
+      </div>
+    </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-core.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
-  <script src="./js/tutorial.js"></script>
-</body>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+    <script src="./js/tutorial.js"></script>
+  </body>
 </html>
-
-          <!-- <div class="settings">
-            <div class="settings__item">
-              <div class="line"></div>
-              <div class="knob"></div>
-            </div>
-            <div class="settings__item">
-              <div class="line"></div>
-              <div class="knob"></div>
-            </div>
-            <div class="settings__item">
-              <div class="line"></div>
-              <div class="knob"></div>
-            </div>
-          </div> -->
