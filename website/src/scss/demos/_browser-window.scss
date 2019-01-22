@@ -105,37 +105,19 @@
         }
       }
     }
-    .settings {
-      display: flex;
-      width: 28px;
-      height: 25px;
-      justify-content: space-between;
-      &__item {
-        position: relative;
-        flex: 0 0 6px;
-        .line {
-          width: 2px;
-          height: 100%;
-          background: var(--color-text);
-          margin-left: 2px;
-          transition: all 0.2s linear 0s;
-        }
-        .knob {
-          width: 6px;
-          height: 6px;
-          border: 2px solid var(--color-text);
-          background: var(--color-bg);
-          position: absolute;
-          left: 0px;
-          top: 4px;
-          transition: all 0.2s ease 0s;
-        }
-        &:nth-child(2) .knob {
-          top: 14px;
-        }
-        &:nth-child(3) .knob {
-          top: 6px;
-        }
+    .settings-icon {
+      width: 34px;
+      height: 34px;
+      &__line {
+        stroke: var(--color-text);
+        stroke-width: 5px;
+        transition: all 0.2s ease 0.05s;
+      }
+      &__rect {
+        stroke: var(--color-text);
+        fill: var(--color-bg);
+        stroke-width: 5px;
+        transition: all 0.2s ease 0.05s;
       }
     }
     svg {
@@ -184,23 +166,21 @@
           }
         }
       }
-      .settings__item {
-        .line {
-          background-color: var(--color-link);
+      .settings-icon {
+        &__line,
+        &__rect {
+          stroke: var(--color-link);
           transition: all 0.2s ease 0.05s;
         }
-        .knob {
-          border-color: var(--color-link);
-          transition: all 0.2s ease 0.05s;
+
+        &__group--1 .settings-icon__rect {
+          transform: translateY(20px);
         }
-        &:nth-child(1) .knob {
-          top: 14px;
+        &__group--2 .settings-icon__rect {
+          transform: translateY(-20px);
         }
-        &:nth-child(2) .knob {
-          top: 6px;
-        }
-        &:nth-child(3) .knob {
-          top: 12px;
+        &__group--3 .settings-icon__rect {
+          transform: translateY(25px);
         }
       }
       .avatar__head {

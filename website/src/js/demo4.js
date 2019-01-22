@@ -136,7 +136,7 @@ class Demo4 {
         // calculate noise value for each point at that frame
         polygon.segments.forEach((segment, i) => {
           const noiseX = noiseObjects[i].noise2D(event.count / noiseScale, 0);
-          const noiseY = noiseObjects[i].noise2D(event.count / noiseScale, 0);
+          const noiseY = noiseObjects[i].noise2D(event.count / noiseScale, 1);
 
           const distortionX = Util.map(noiseX, -1, 1, -noiseRange, noiseRange);
           const distortionY = Util.map(noiseY, -1, 1, -noiseRange, noiseRange);
