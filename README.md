@@ -1,8 +1,8 @@
 # Custom Cursor Effects
 
-Custom Cursor effects demo + tutorial for [Codrops](https://tympanus.net/codrops/).
+Custom cursor effects demo and tutorial for [Codrops](https://tympanus.net/codrops/).
 
-Thanks [IamManchanda](https://github.com/IamManchanda) for the nice development setup [gulp-webpack](https://github.com/IamManchanda/gulp-webpack) which I forked for this project.
+Thanks [IamManchanda](https://github.com/IamManchanda) for the nice dev setup [gulp-webpack](https://github.com/IamManchanda/gulp-webpack), which I forked for this project.
 
 ## Setup
 
