@@ -8,99 +8,100 @@ body.tutorial {
   opacity: 1 !important;
   background-color: var(--color-bg);
 }
+.tutorial {
+  .page {
+    position: absolute;
+    padding: calc(1.5em + 42px + 1.5em) 1.5em;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.page {
-  position: absolute;
-  padding: calc(1.5em + 42px + 1.5em) 1.5em;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .page__inner {
+    justify-content: center;
+    display: flex;
+    width: 100%;
+  }
 
-.page__inner {
-  justify-content: center;
-  display: flex;
-  width: 100%;
-}
+  .page,
+  .page a {
+    cursor: none;
+  }
 
-.page,
-.page a {
-  cursor: none;
-}
+  .tutorial .cursor {
+    position: fixed;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+  }
 
-.tutorial .cursor {
-  position: fixed;
-  left: 0;
-  top: 0;
-  pointer-events: none;
-}
+  .tutorial .cursor--small {
+    width: 5px;
+    height: 5px;
+    left: -2.5px;
+    top: -2.5px;
+    border-radius: 50%;
+    z-index: 11000;
+    background: var(--color-text);
+  }
 
-.tutorial .cursor--small {
-  width: 5px;
-  height: 5px;
-  left: -2.5px;
-  top: -2.5px;
-  border-radius: 50%;
-  z-index: 11000;
-  background: var(--color-text);
-}
+  .tutorial .cursor--canvas {
+    width: 100vw;
+    height: 100vh;
+    z-index: 12000;
+  }
 
-.tutorial .cursor--canvas {
-  width: 100vw;
-  height: 100vh;
-  z-index: 12000;
-}
+  .nav {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-.nav {
-  display: flex;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
+  .link {
+    display: flex;
+    width: 75px;
+    height: 75px;
+    margin: 0 5px;
+    justify-content: center;
+    align-items: center;
+  }
 
-.link {
-  display: flex;
-  width: 75px;
-  height: 75px;
-  margin: 0 5px;
-  justify-content: center;
-  align-items: center;
-}
+  .settings-icon {
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
 
-.settings-icon {
-  display: block;
-  width: 40px;
-  height: 40px;
-}
+  .settings-icon__line {
+    stroke: var(--color-text);
+    stroke-width: 5px;
+    transition: all 0.2s ease 0.05s;
+  }
 
-.settings-icon__line {
-  stroke: var(--color-text);
-  stroke-width: 5px;
-  transition: all 0.2s ease 0.05s;
-}
+  .settings-icon__rect {
+    stroke: var(--color-text);
+    fill: var(--color-bg);
+    stroke-width: 5px;
+    transition: all 0.2s ease 0.05s;
+  }
 
-.settings-icon__rect {
-  stroke: var(--color-text);
-  fill: var(--color-bg);
-  stroke-width: 5px;
-  transition: all 0.2s ease 0.05s;
-}
+  .link:hover .settings-icon__line,
+  .link:hover .settings-icon__rect {
+    stroke: var(--color-link);
+    transition: all 0.2s ease 0.05s;
+  }
 
-.link:hover .settings-icon__line,
-.link:hover .settings-icon__rect {
-  stroke: var(--color-link);
-  transition: all 0.2s ease 0.05s;
-}
-
-.link:hover .settings-icon__group--1 .settings-icon__rect {
-  transform: translateY(20px);
-}
-.link:hover .settings-icon__group--2 .settings-icon__rect {
-  transform: translateY(-20px);
-}
-.link:hover .settings-icon__group--3 .settings-icon__rect {
-  transform: translateY(25px);
+  .link:hover .settings-icon__group--1 .settings-icon__rect {
+    transform: translateY(20px);
+  }
+  .link:hover .settings-icon__group--2 .settings-icon__rect {
+    transform: translateY(-20px);
+  }
+  .link:hover .settings-icon__group--3 .settings-icon__rect {
+    transform: translateY(25px);
+  }
 }
