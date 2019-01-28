@@ -30,14 +30,14 @@ body.tutorial {
     cursor: none;
   }
 
-  .tutorial .cursor {
+  .cursor {
     position: fixed;
     left: 0;
     top: 0;
     pointer-events: none;
   }
 
-  .tutorial .cursor--small {
+  .cursor--small {
     width: 5px;
     height: 5px;
     left: -2.5px;
@@ -47,7 +47,7 @@ body.tutorial {
     background: var(--color-text);
   }
 
-  .tutorial .cursor--canvas {
+  .cursor--canvas {
     width: 100vw;
     height: 100vh;
     z-index: 12000;
