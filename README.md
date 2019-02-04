@@ -1,6 +1,6 @@
 # Custom Cursor Effects
 
-Custom cursor effects demo and tutorial by [Stefan Kaltenegger](http://wwww.stk.works) for [Codrops](https://tympanus.net/codrops/).
+Custom cursor effects demo and tutorial by [Stefan Kaltenegger](http://www.stk.works) for [Codrops](https://tympanus.net/codrops/).
 
 [Article on Codrops](https://tympanus.net/codrops/?p=37356)
 
