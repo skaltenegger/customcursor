@@ -12,14 +12,9 @@ const gulpUglify = require("gulp-uglify");
 const gulpSourcemaps = require("gulp-sourcemaps");
 const gulpPostcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
-const postcssUncss = require("postcss-uncss");
 const dartSass = require("sass");
 const gulpSass = require("gulp-sass")(dartSass);
 const gulpBabel = require("gulp-babel");
-const gulpImagemin = require("gulp-imagemin");
-const gulpHtmlmin = require("gulp-htmlmin");
-const imageminPngquant = require("imagemin-pngquant");
-const imageminJpegRecompress = require("imagemin-jpeg-recompress");
 
 // Entry point retreive from webpack
 const entry = require("./webpack/entry");
@@ -44,7 +39,10 @@ const supportedBrowsers = [
 ];
 
 // Config
-const autoprefixConfig = { browsers: supportedBrowsers, cascade: false };
+const autoprefixConfig = {
+  overrideBrowserslist: supportedBrowsers,
+  cascade: false
+};
 const babelConfig = { targets: { browsers: supportedBrowsers } };
 
 // Paths for reuse
@@ -116,40 +114,30 @@ const cleanExport = mode => () => {
 // Build Markup Tasks
 const buildMarkup = mode => done => {
   ["development", "production"].includes(mode)
-    ? pump(
-        [
-          gulp.src(srcPath("html")),
-          ...(mode === "production"
-            ? [gulpHtmlmin({ collapseWhitespace: true })]
-            : []),
-          gulp.dest(distPath("html", true))
-        ],
-        done
-      )
+    ? pump([gulp.src(srcPath("html")), gulp.dest(distPath("html", true))], done)
     : undefined;
 };
 
 // Build Images Task
-const buildImages = mode => done => {
+const buildImages = mode => async done => {
   if (!["development", "production"].includes(mode)) return undefined;
 
-  const imageminPlugins =
-    mode === "production"
-      ? [
-          gulpImagemin.gifsicle(),
-          gulpImagemin.jpegtran(),
-          gulpImagemin.optipng(),
-          gulpImagemin.svgo(),
-          imageminPngquant(),
-          imageminJpegRecompress()
-        ]
-      : null;
+  if (mode === "production") {
+    // Skip imagemin in production for now; recent plugin changes are corrupting output.
+    return pump(
+      [
+        gulp.src(srcPath("img"), { encoding: false }),
+        gulp.dest(distPath("img"), { encoding: false }),
+        browserSync.stream()
+      ],
+      done
+    );
+  }
 
   return pump(
     [
-      gulp.src(srcPath("img")),
-      ...(imageminPlugins ? [gulpImagemin(imageminPlugins)] : []),
-      gulp.dest(distPath("img")),
+      gulp.src(srcPath("img"), { encoding: false }),
+      gulp.dest(distPath("img"), { encoding: false }),
       browserSync.stream()
     ],
     done
@@ -163,10 +151,7 @@ const buildStyles = mode => done => {
   else if (mode === "production") outputStyle = "compressed";
   else outputStyle = undefined;
 
-  const postcssPlugins = [
-    autoprefixer(autoprefixConfig)
-    // postcssUncss({ html: [distPath("html")] })
-  ];
+  const postcssPlugins = [autoprefixer(autoprefixConfig)];
 
   ["development", "production"].includes(mode)
     ? pump(
@@ -205,7 +190,7 @@ const buildScripts = mode => done => {
             if (!isSourceMap) this.push(file);
             cb();
           }),
-          gulpBabel({ presets: [["env", babelConfig]] }),
+          gulpBabel({ presets: [["@babel/preset-env", babelConfig]] }),
           ...(mode === "production"
             ? [
                 /*gulpUglify()*/

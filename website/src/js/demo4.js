@@ -1,4 +1,4 @@
-import TweenMax from "gsap/TweenMax";
+import { gsap } from "gsap";
 import initPageTransitions from "./initPageTransitions";
 import Util from "./utils/util";
 
@@ -47,7 +47,7 @@ class Demo4 {
     });
 
     const render = () => {
-      TweenMax.set(this.innerCursor, {
+      gsap.set(this.innerCursor, {
         x: this.clientX,
         y: this.clientY
       });
@@ -183,12 +183,12 @@ class Demo4 {
     const mainNavItemMouseEnter = () => {
       this.outerCursorSpeed = 0.8;
       this.fillOuterCursor = true;
-      TweenMax.to(this.innerCursor, 0.2, { opacity: 0 });
+      gsap.to(this.innerCursor, 0.2, { opacity: 0 });
     };
     const mainNavItemMouseLeave = () => {
       this.outerCursorSpeed = 0.2;
       this.fillOuterCursor = false;
-      TweenMax.to(this.innerCursor, 0.2, { opacity: 1 });
+      gsap.to(this.innerCursor, 0.2, { opacity: 1 });
     };
 
     const mainNavItems = document.querySelectorAll(".content--fixed a");

@@ -1,6 +1,6 @@
 import PhotoSwipe from "photoswipe";
 import PhotoSwipeUIDefault from "photoswipe/src/js/ui/photoswipe-ui-default";
-import TweenMax from "gsap/TweenMax";
+import { gsap, Back } from "gsap";
 
 import initPageTransitions from "./initPageTransitions";
 import Util from "./utils/util";
@@ -32,7 +32,6 @@ class Demo1 {
   }
 
   initDemo() {
-    const { Back } = window;
     this.easing = Back.easeInOut.config(1.7);
     this.gridInner = document.querySelector(".grid__inner");
 
@@ -50,7 +49,7 @@ class Demo1 {
     });
 
     const render = () => {
-      TweenMax.set(this.cursorWrapper, {
+      gsap.set(this.cursorWrapper, {
         x: this.clientX,
         y: this.clientY
       });
@@ -59,7 +58,7 @@ class Demo1 {
     requestAnimationFrame(render);
 
     this.fullCursorSize = 40;
-    this.enlargeCursorTween = TweenMax.to(this.outerCursor, 0.3, {
+    this.enlargeCursorTween = gsap.to(this.outerCursor, 0.3, {
       backgroundColor: "transparent",
       width: this.fullCursorSize,
       height: this.fullCursorSize,
@@ -67,7 +66,7 @@ class Demo1 {
       paused: true
     });
 
-    this.mainNavHoverTween = TweenMax.to(this.outerCursor, 0.3, {
+    this.mainNavHoverTween = gsap.to(this.outerCursor, 0.3, {
       backgroundColor: "#ffffff",
       opacity: 0.3,
       width: this.fullCursorSize,
@@ -103,11 +102,11 @@ class Demo1 {
       });
     });
 
-    this.bumpCursorTween = TweenMax.to(this.outerCursor, 0.1, {
+    this.bumpCursorTween = gsap.to(this.outerCursor, 0.1, {
       scale: 0.7,
       paused: true,
       onComplete: () => {
-        TweenMax.to(this.outerCursor, 0.2, {
+        gsap.to(this.outerCursor, 0.2, {
           scale: 1,
           ease: this.easing
         });
@@ -116,14 +115,14 @@ class Demo1 {
   }
 
   openGalleryActions() {
-    this.bumpCursorTween.play();
+    this.bumpCursorTween.restart();
     this.innerCursor.classList.add("is-closing");
     this.cursorWrapper.classList.add("has-blend-mode");
     this.cursorWrapper.classList.remove("is-outside");
   }
 
   closeGalleryactions() {
-    this.bumpCursorTween.play();
+    this.bumpCursorTween.restart();
     this.innerCursor.classList.remove("is-closing");
     this.cursorWrapper.classList.remove("has-blend-mode");
     setTimeout(() => {

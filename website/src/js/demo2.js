@@ -1,4 +1,4 @@
-import TweenMax from "gsap/TweenMax";
+import { gsap, Back } from "gsap";
 import initPageTransitions from "./initPageTransitions";
 
 /**
@@ -21,7 +21,6 @@ class Demo2 {
   }
 
   initDemo() {
-    const { Back } = window;
     this.cursor = document.querySelector(".arrow-cursor");
     this.cursorIcon = document.querySelector(".arrow-cursor__icon");
     this.cursorBox = this.cursor.getBoundingClientRect();
@@ -31,7 +30,7 @@ class Demo2 {
     this.cursorInsideSwiper = false;
 
     // initial cursor styling
-    TweenMax.to(this.cursorIcon, 0, {
+    gsap.to(this.cursorIcon, 0, {
       rotation: -135,
       opacity: 0,
       scale: 0.5
@@ -43,7 +42,7 @@ class Demo2 {
     });
 
     const render = () => {
-      TweenMax.set(this.cursor, {
+      gsap.set(this.cursor, {
         x: this.clientX,
         y: this.clientY
       });
@@ -64,13 +63,13 @@ class Demo2 {
       } else {
         startRotation = this.clientX > window.innerWidth / 2 ? 135 : -315;
       }
-      TweenMax.set(this.cursorIcon, {
+      gsap.set(this.cursorIcon, {
         rotation: startRotation
       });
 
       this.cursorSide = this.clientX > window.innerWidth / 2 ? "right" : "left";
 
-      TweenMax.to(this.cursorIcon, this.animationDuration, {
+      gsap.to(this.cursorIcon, this.animationDuration, {
         rotation: this.cursorSide === "right" ? 0 : -180,
         scale: 1,
         opacity: 1,
@@ -89,7 +88,7 @@ class Demo2 {
         outRotation = this.cursorSide === "right" ? 135 : -315;
       }
 
-      TweenMax.to(this.cursorIcon, this.animationDuration, {
+      gsap.to(this.cursorIcon, this.animationDuration, {
         rotation: outRotation,
         opacity: 0,
         scale: 0.3
@@ -102,7 +101,7 @@ class Demo2 {
     // move cursor from left to right or right to left inside the Swiper
     const onSwitchSwiperSides = () => {
       if (this.cursorInsideSwiper) {
-        TweenMax.to(this.cursorIcon, this.animationDuration, {
+        gsap.to(this.cursorIcon, this.animationDuration, {
           rotation: this.cursorSide === "right" ? -180 : 0,
           ease: this.easing
         });
@@ -143,16 +142,16 @@ class Demo2 {
 
       this.cursorSide = this.clientX > window.innerWidth / 2 ? "right" : "left";
 
-      TweenMax.to(this.cursorIcon, this.animationDuration, {
+      gsap.to(this.cursorIcon, this.animationDuration, {
         rotation: this.cursorSide === "right" ? 0 : -180,
         ease: this.easing
       });
     });
 
-    this.bumpCursorTween = TweenMax.to(this.cursor, 0.1, {
+    this.bumpCursorTween = gsap.to(this.cursor, 0.1, {
       scale: 0.85,
       onComplete: () => {
-        TweenMax.to(this.cursor, 0.2, {
+        gsap.to(this.cursor, 0.2, {
           scale: 1,
           ease: this.easing
         });
@@ -161,7 +160,7 @@ class Demo2 {
     });
 
     this.swiper.on("slideChange", () => {
-      this.bumpCursorTween.play();
+      this.bumpCursorTween.restart();
     });
   }
 }

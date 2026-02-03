@@ -1,4 +1,4 @@
-import TweenMax from "gsap/TweenMax";
+import { gsap, Back } from "gsap";
 import initPageTransitions from "./initPageTransitions";
 
 /**
@@ -20,7 +20,6 @@ class Demo5 {
   }
 
   initCursor() {
-    const { Back } = window;
     this.cursor = document.querySelector(".square-cursor");
     this.cursorInner = document.querySelector(".square-cursor__inner");
     this.cursorObjectBox = this.cursorInner.getBoundingClientRect();
@@ -46,7 +45,7 @@ class Demo5 {
 
     const render = () => {
       if (!this.isStuck) {
-        TweenMax.set(this.cursor, {
+        gsap.set(this.cursor, {
           x: this.clientX - this.cursorBox.width / 2,
           y: this.clientY - this.cursorBox.height / 2
         });
@@ -70,11 +69,11 @@ class Demo5 {
         activeItem.classList.remove("is-active");
       }
 
-      TweenMax.to(this.cursor, 0.25, {
+      gsap.to(this.cursor, 0.25, {
         x: linkBox.left + linkBox.width / 2 - this.cursorBox.width / 2,
         y: linkBox.top + linkBox.height / 2 - this.cursorBox.height / 2 - 0.5
       });
-      TweenMax.to(this.cursorInner, 0.2, {
+      gsap.to(this.cursorInner, 0.2, {
         rotation: 0,
         width: linkBox.width,
         height: linkBox.height
@@ -90,7 +89,7 @@ class Demo5 {
         )
         .classList.add("is-active");
 
-      TweenMax.to(this.cursorInner, 0.25, {
+      gsap.to(this.cursorInner, 0.25, {
         rotation: -45,
         width: this.cursorOriginals.width,
         height: this.cursorOriginals.height
@@ -131,7 +130,7 @@ class Demo5 {
 
     this.nav.addEventListener("mouseleave", handleMouseLeave);
 
-    const mainNavItemTween = TweenMax.to(this.cursorInner, 0.2, {
+    const mainNavItemTween = gsap.to(this.cursorInner, 0.2, {
       scale: 0.8,
       borderColor: "#ffffff",
       ease: this.easing,
