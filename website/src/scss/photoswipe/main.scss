@@ -6,7 +6,7 @@
 
 // PhotoSwipe uses Autoprefixer, so vendor prefixed are added automatically when needed.
 
-@import "main-settings";
+@use "main-settings" as *;
 
 /* pswp = photoswipe */
 .pswp {

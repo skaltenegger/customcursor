@@ -17,7 +17,7 @@
 
 
 
-@import "../main-settings";
+@use "../main-settings" as *;
 
 
 /*
@@ -574,7 +574,6 @@ a.pswp__share--download {
 		}
 	}
 }
-
 
 
 

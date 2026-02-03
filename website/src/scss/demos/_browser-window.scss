@@ -1,194 +1,196 @@
-.browser-window {
-  width: calc(100% - 100px);
-  max-width: 960px;
-  position: relative;
-  &__bar {
-    height: 25px;
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--color-line);
-    border-bottom: 0;
-    border-radius: 10px 10px 0 0;
-    .dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 5px;
-      background: var(--color-line);
-      margin-left: 8px;
-      &:first-child {
-        margin-left: 12px;
-      }
-    }
-  }
-  &__content {
-    border: 1px solid var(--color-line);
-    display: flex;
-    height: 300px;
-    justify-content: space-between;
-    padding: 20px;
+@mixin browser-window {
+  .browser-window {
+    width: calc(100% - 100px);
+    max-width: 960px;
     position: relative;
-    border-image: linear-gradient(
-      to bottom,
-      var(--color-line) 0%,
-      var(--color-line) 50%,
-      var(--color-bg) 100%
-    );
-    border-image-slice: 1;
-    &-right {
+    &__bar {
+      height: 25px;
       display: flex;
-      .browser-window__link {
-        margin-left: 10px;
+      align-items: center;
+      border: 1px solid var(--color-line);
+      border-bottom: 0;
+      border-radius: 10px 10px 0 0;
+      .dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 5px;
+        background: var(--color-line);
+        margin-left: 8px;
+        &:first-child {
+          margin-left: 12px;
+        }
       }
     }
-  }
-  &__link {
-    display: flex;
-    width: 75px;
-    height: 75px;
-    justify-content: center;
-    align-items: center;
-    .hamburger {
-      display: block;
-      width: 26px;
-      height: 18px;
+    &__content {
+      border: 1px solid var(--color-line);
+      display: flex;
+      height: 300px;
+      justify-content: space-between;
+      padding: 20px;
       position: relative;
-      span {
-        display: block;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100%;
-        height: 2px;
-        background: var(--color-text);
-        z-index: 0;
-        &:nth-child(1) {
-          top: 0px;
-        }
-        &:nth-child(2) {
-          top: 8px;
-        }
-        &:nth-child(3) {
-          top: 16px;
-        }
-        &:before,
-        &:after {
-          position: absolute;
-          content: "";
-          display: block;
-          top: 0;
-          height: 100%;
-          width: 0;
-          right: 0;
-          left: auto;
-        }
-        &:before {
-          z-index: 1;
-          background: var(--color-link);
-          transition: all 0.15s linear 0s;
-        }
-        &:after {
-          z-index: 2;
-          background: var(--color-bg);
-          transition: all 0.15s linear 0.3s;
-        }
-        &:nth-child(2):before {
-          transition-delay: 0.15s;
-        }
-        &:nth-child(3):before {
-          transition-delay: 0.3s;
-        }
-        &:nth-child(2):after {
-          transition-delay: 0.45s;
-        }
-        &:nth-child(3):after {
-          transition-delay: 0.6s;
+      border-image: linear-gradient(
+        to bottom,
+        var(--color-line) 0%,
+        var(--color-line) 50%,
+        var(--color-bg) 100%
+      );
+      border-image-slice: 1;
+      &-right {
+        display: flex;
+        .browser-window__link {
+          margin-left: 10px;
         }
       }
     }
-    .settings-icon {
-      width: 34px;
-      height: 34px;
-      &__line {
-        stroke: var(--color-text);
-        stroke-width: 5px;
-        transition: all 0.2s ease 0.05s;
-      }
-      &__rect {
-        stroke: var(--color-text);
-        fill: var(--color-bg);
-        stroke-width: 5px;
-        transition: all 0.2s ease 0.05s;
-      }
-    }
-    svg {
-      width: 30px;
-      height: 30px;
-      path {
-        fill: var(--color-text);
-        transition: all 0.2s ease 0s;
-      }
-    }
-    .magnifyer {
-      transition: all 0.2s ease;
-    }
-    &:hover {
-      svg path {
-        fill: var(--color-link);
-        transition: all 0.2s ease 0.05s;
-      }
+    &__link {
+      display: flex;
+      width: 75px;
+      height: 75px;
+      justify-content: center;
+      align-items: center;
       .hamburger {
+        display: block;
+        width: 26px;
+        height: 18px;
+        position: relative;
         span {
-          &:after,
-          &:before {
-            width: 100%;
-            left: 0;
-            right: auto;
+          display: block;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 100%;
+          height: 2px;
+          background: var(--color-text);
+          z-index: 0;
+          &:nth-child(1) {
+            top: 0px;
           }
+          &:nth-child(2) {
+            top: 8px;
+          }
+          &:nth-child(3) {
+            top: 16px;
+          }
+          &:before,
           &:after {
+            position: absolute;
+            content: "";
+            display: block;
+            top: 0;
+            height: 100%;
+            width: 0;
+            right: 0;
+            left: auto;
+          }
+          &:before {
             z-index: 1;
+            background: var(--color-link);
             transition: all 0.15s linear 0s;
           }
-          &:before {
+          &:after {
             z-index: 2;
+            background: var(--color-bg);
             transition: all 0.15s linear 0.3s;
           }
-          &:nth-child(2):after {
+          &:nth-child(2):before {
             transition-delay: 0.15s;
           }
-          &:nth-child(3):after {
+          &:nth-child(3):before {
             transition-delay: 0.3s;
           }
-          &:nth-child(2):before {
+          &:nth-child(2):after {
             transition-delay: 0.45s;
           }
-          &:nth-child(3):before {
+          &:nth-child(3):after {
             transition-delay: 0.6s;
           }
         }
       }
       .settings-icon {
-        &__line,
-        &__rect {
-          stroke: var(--color-link);
+        width: 34px;
+        height: 34px;
+        &__line {
+          stroke: var(--color-text);
+          stroke-width: 5px;
           transition: all 0.2s ease 0.05s;
         }
-
-        &__group--1 .settings-icon__rect {
-          transform: translateY(20px);
-        }
-        &__group--2 .settings-icon__rect {
-          transform: translateY(-20px);
-        }
-        &__group--3 .settings-icon__rect {
-          transform: translateY(25px);
+        &__rect {
+          stroke: var(--color-text);
+          fill: var(--color-bg);
+          stroke-width: 5px;
+          transition: all 0.2s ease 0.05s;
         }
       }
-      .avatar__head {
-        transform: translateY(-3px);
+      svg {
+        width: 30px;
+        height: 30px;
+        path {
+          fill: var(--color-text);
+          transition: all 0.2s ease 0s;
+        }
       }
       .magnifyer {
-        transform: rotate(88deg);
-        transform-origin: 45% 43%;
+        transition: all 0.2s ease;
+      }
+      &:hover {
+        svg path {
+          fill: var(--color-link);
+          transition: all 0.2s ease 0.05s;
+        }
+        .hamburger {
+          span {
+            &:after,
+            &:before {
+              width: 100%;
+              left: 0;
+              right: auto;
+            }
+            &:after {
+              z-index: 1;
+              transition: all 0.15s linear 0s;
+            }
+            &:before {
+              z-index: 2;
+              transition: all 0.15s linear 0.3s;
+            }
+            &:nth-child(2):after {
+              transition-delay: 0.15s;
+            }
+            &:nth-child(3):after {
+              transition-delay: 0.3s;
+            }
+            &:nth-child(2):before {
+              transition-delay: 0.45s;
+            }
+            &:nth-child(3):before {
+              transition-delay: 0.6s;
+            }
+          }
+        }
+        .settings-icon {
+          &__line,
+          &__rect {
+            stroke: var(--color-link);
+            transition: all 0.2s ease 0.05s;
+          }
+
+          &__group--1 .settings-icon__rect {
+            transform: translateY(20px);
+          }
+          &__group--2 .settings-icon__rect {
+            transform: translateY(-20px);
+          }
+          &__group--3 .settings-icon__rect {
+            transform: translateY(25px);
+          }
+        }
+        .avatar__head {
+          transform: translateY(-3px);
+        }
+        .magnifyer {
+          transform: rotate(88deg);
+          transform-origin: 45% 43%;
+        }
       }
     }
   }

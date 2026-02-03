@@ -1,3 +1,5 @@
+@use "browser-window" as browserWindow;
+
 .demo-3 {
   --color-text: #fff;
   --color-bg: #171717;
@@ -48,5 +50,5 @@
     }
   }
 
-  @import "_browser-window.scss";
+  @include browserWindow.browser-window;
 }

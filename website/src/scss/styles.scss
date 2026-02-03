@@ -1,12 +1,12 @@
-@import "base/minireset";
-@import "base/base";
+@use "base/minireset";
+@use "base/base";
 
-@import "photoswipe/main";
-@import "photoswipe/default-skin/default-skin";
+@use "photoswipe/main";
+@use "photoswipe/default-skin/default-skin";
 
-@import "demos/demo1";
-@import "demos/demo2";
-@import "demos/demo3";
-@import "demos/demo4";
-@import "demos/demo5";
-@import "demos/tutorial";
+@use "demos/demo1";
+@use "demos/demo2";
+@use "demos/demo3";
+@use "demos/demo4";
+@use "demos/demo5";
+@use "demos/tutorial";

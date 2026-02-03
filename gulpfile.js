@@ -13,7 +13,8 @@ const gulpSourcemaps = require("gulp-sourcemaps");
 const gulpPostcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const postcssUncss = require("postcss-uncss");
-const gulpSass = require("gulp-sass");
+const dartSass = require("sass");
+const gulpSass = require("gulp-sass")(dartSass);
 const gulpBabel = require("gulp-babel");
 const gulpImagemin = require("gulp-imagemin");
 const gulpHtmlmin = require("gulp-htmlmin");
@@ -130,30 +131,35 @@ const buildMarkup = mode => done => {
 
 // Build Images Task
 const buildImages = mode => done => {
-  ["development", "production"].includes(mode)
-    ? pump(
-        [
-          gulp.src(srcPath("img")),
-          gulpImagemin([
-            gulpImagemin.gifsicle(),
-            gulpImagemin.jpegtran(),
-            gulpImagemin.optipng(),
-            gulpImagemin.svgo(),
-            imageminPngquant(),
-            imageminJpegRecompress()
-          ]),
-          gulp.dest(distPath("img")),
-          browserSync.stream()
-        ],
-        done
-      )
-    : undefined;
+  if (!["development", "production"].includes(mode)) return undefined;
+
+  const imageminPlugins =
+    mode === "production"
+      ? [
+          gulpImagemin.gifsicle(),
+          gulpImagemin.jpegtran(),
+          gulpImagemin.optipng(),
+          gulpImagemin.svgo(),
+          imageminPngquant(),
+          imageminJpegRecompress()
+        ]
+      : null;
+
+  return pump(
+    [
+      gulp.src(srcPath("img")),
+      ...(imageminPlugins ? [gulpImagemin(imageminPlugins)] : []),
+      gulp.dest(distPath("img")),
+      browserSync.stream()
+    ],
+    done
+  );
 };
 
 // Build Styles Task
 const buildStyles = mode => done => {
   let outputStyle;
-  if (mode === "development") outputStyle = "nested";
+  if (mode === "development") outputStyle = "expanded";
   else if (mode === "production") outputStyle = "compressed";
   else outputStyle = undefined;
 
@@ -242,12 +248,12 @@ const genericTask = (mode, context = "building") => {
     Object.assign(buildMarkup(mode), {
       displayName: `Booting Markup Task: Build - ${modeName}`
     }),
-    // Object.assign(cleanImages(mode), {
-    //   displayName: `Booting Images Task: Clean - ${modeName}`
-    // }),
-    // Object.assign(buildImages(mode), {
-    //   displayName: `Booting Images Task: Build - ${modeName}`
-    // }),
+    Object.assign(cleanImages(mode), {
+      displayName: `Booting Images Task: Clean - ${modeName}`
+    }),
+    Object.assign(buildImages(mode), {
+      displayName: `Booting Images Task: Build - ${modeName}`
+    }),
     Object.assign(cleanStyles(mode), {
       displayName: `Booting Styles Task: Clean - ${modeName}`
     }),
